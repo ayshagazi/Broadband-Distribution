@@ -5,6 +5,14 @@
  */
 package broadband_distribution;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author HP
@@ -102,6 +110,32 @@ public class Registration extends javax.swing.JFrame {
         
         String name= Rname.getText();
         String pass= Rpass.getText();
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+
+            
+            
+            if (name.equals("")) {
+                JOptionPane.showMessageDialog(this, "Eniter Name");
+                    
+            }
+            else
+            {
+                
+                Statement statement = connection.createStatement();
+                 statement.executeQuery("INSERT INTO Admin_of_ISP VALUES ('"+name+"','"+pass+"')");
+               // JOptionPane.showMessageDialog(this, "Registration Complete.");
+                  HomePage m=new HomePage();
+                //CLIENT_NAME,CLIENT_EMAIL,ADDRESS,PHONE,ANUAL_INCOME
+            }
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_regActionPerformed
 
