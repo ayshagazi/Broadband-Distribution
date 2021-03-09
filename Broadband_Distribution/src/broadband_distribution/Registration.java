@@ -116,7 +116,6 @@ public class Registration extends javax.swing.JFrame {
                     "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
 
             
-            
             if (name.equals("")) {
                 JOptionPane.showMessageDialog(this, "Eniter Name");
                     

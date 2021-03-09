@@ -47,7 +47,8 @@ public class Broadband_Distribution {
 public static void main(String[] args) {
         // TODO code application logic here
          
-       
+      Broadband_Distribution cnObj = new Broadband_Distribution();
+        cnObj.connectDB();
 }
     
 }

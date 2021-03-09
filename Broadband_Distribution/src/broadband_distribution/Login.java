@@ -117,7 +117,7 @@ public class Login extends javax.swing.JFrame {
        try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection connection = DriverManager.getConnection(
-                    "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+                    "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");   
 
             String username= aName.getText();
             String pass= passs.getText();
