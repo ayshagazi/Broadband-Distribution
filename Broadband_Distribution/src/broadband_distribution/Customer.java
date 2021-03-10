@@ -9,7 +9,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -45,11 +48,11 @@ public class Customer extends javax.swing.JFrame {
         email = new javax.swing.JTextField();
         address = new javax.swing.JTextField();
         contactNo = new javax.swing.JTextField();
-        add = new javax.swing.JButton();
         update = new javax.swing.JButton();
         delete = new javax.swing.JButton();
         save = new javax.swing.JButton();
         id = new javax.swing.JTextField();
+        ins = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,6 +74,9 @@ public class Customer extends javax.swing.JFrame {
         csTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 csTableMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                csTableMouseEntered(evt);
             }
         });
         jScrollPane1.setViewportView(csTable);
@@ -96,13 +102,6 @@ public class Customer extends javax.swing.JFrame {
             }
         });
 
-        add.setText("Add");
-        add.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addActionPerformed(evt);
-            }
-        });
-
         update.setText("Update");
         update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,6 +123,13 @@ public class Customer extends javax.swing.JFrame {
             }
         });
 
+        ins.setText("insert");
+        ins.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                insActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -131,24 +137,31 @@ public class Customer extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(135, 135, 135)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(contactNo, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                                .addComponent(address)
-                                .addComponent(email)
-                                .addComponent(name))
-                            .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(add)
-                            .addComponent(update)
-                            .addComponent(delete)
-                            .addComponent(save))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(85, 85, 85)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(update))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(135, 135, 135)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(contactNo, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                                        .addComponent(address)
+                                        .addComponent(email)
+                                        .addComponent(name))
+                                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(save)
+                                            .addComponent(ins))
+                                        .addGap(4, 4, 4))
+                                    .addComponent(delete, javax.swing.GroupLayout.Alignment.TRAILING))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(cInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(84, Short.MAX_VALUE))
@@ -163,18 +176,18 @@ public class Customer extends javax.swing.JFrame {
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(41, 41, 41)
-                                .addComponent(add)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(30, 30, 30)
+                                .addComponent(ins)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                                 .addComponent(update)
-                                .addGap(45, 45, 45))
+                                .addGap(50, 50, 50))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(17, 17, 17)))
-                        .addComponent(delete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(49, 49, 49)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(delete))
                         .addGap(28, 28, 28)
                         .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
@@ -239,80 +252,53 @@ public class Customer extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_nameActionPerformed
 
-    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
-        // TODO add your handling code here:
-        if (name.getText().equals("") || email.getText().equals("") || address.getText().equals("") || contactNo.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Enter all data");
-        } else {
-             String id, tname, temail, taddress, tcontact;
-             tname= name.getText();
-             temail= email.getText();
-             taddress= address.getText();
-             tcontact= contactNo.getText();
-            try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
-
-            //  System.out.println("DATABASE NAME IS:" + connection.getMetaData().getDatabaseProductName());
-            Statement statement = connection.createStatement();
-            String sql = "INSERT INTO customer ('" + tname + "','" + temail + "','" + taddress + "','" + tcontact + "')";
-           // String sql = "SELECT * FROM customer";
-           // ResultSet resultSet = statement
-                 //   .executeQuery(sql);
-             PreparedStatement prepare = connection.prepareStatement(sql);
-             
-            //while (prepare.next()) {
-                
-              /*  String id = prepare.getString("customerId");
-                String fname = resultSet.getString("cName");
-                String femail = resultSet.getString("cEmail");
-                //  String ca= resultSet.getString("CoustomerAddress");
-                String fAd = resultSet.getString("cAdress");
-                String fNo = resultSet.getString("cPhoneNo");
-                
-                String tData[] = {id, fname, femail, fAd, fNo};
-                DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
-                tbm1.addRow(tData);
-            
-            */
-              prepare.executeUpdate();
-                
-           // }
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-            
-            
-            
-            
-            
-            
-            
-            
-        /*    
-            String data[] = {id.getText(), name.getText(), email.getText(), address.getText(), contactNo.getText()};
-            
-            DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
-            tbm1.addRow(data);
-            JOptionPane.showMessageDialog(this, "Added successfully");
-            
-           // id.setText("");
-            name.setText("");
-            email.setText("");
-            address.setText("");
-            contactNo.setText("");
-          */  
-        }
-    }//GEN-LAST:event_addActionPerformed
-
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         // TODO add your handling code here:
         DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
         
         if (csTable.getSelectedRowCount() == 1) {
-            tbm1.removeRow(csTable.getSelectedRow());
+            //tbm1.removeRow(csTable.getSelectedRow());
+         String tname= name.getText();
+         String temail=email.getText();
+         String taddress= address.getText();
+         String tNo= contactNo.getText();
+       // String pass= pass.getText();
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+
+            
+            if (name.equals("")) {
+                JOptionPane.showMessageDialog(this, "Eniter Name");
+                    
+            }
+            else
+            {
+                
+                Statement statement = connection.createStatement();
+                
+             String sql = "DELETE FROM customer WHERE customerID=14";
+                  //   + " ('" + tname + "','" + temail + "','" + taddress + "','"+Integer.parseInt(tNo)+"')";
+
+                 PreparedStatement prepare= connection.prepareStatement(sql);
+                 
+                 prepare.executeUpdate();
+                // statement.executeQuery("INSERT INTO Admin_of_ISP VALUES ('"+name+"','"+pass+"')");
+                JOptionPane.showMessageDialog(this, "Registration Complete.");
+                  HomePage m=new HomePage();
+                //CLIENT_NAME,CLIENT_EMAIL,ADDRESS,PHONE,ANUAL_INCOME
+            }
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+            
+            
+            
         } else {
             if (csTable.getRowCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Table Empty");
@@ -330,11 +316,13 @@ public class Customer extends javax.swing.JFrame {
         // TODO add your handling code here:
         DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
         
-        String tName = tbm1.getValueAt(csTable.getSelectedRow(), 0).toString();
-        String temail = tbm1.getValueAt(csTable.getSelectedRow(), 1).toString();
-        String tadd = tbm1.getValueAt(csTable.getSelectedRow(), 2).toString();
-        String tcontact = tbm1.getValueAt(csTable.getSelectedRow(), 3).toString();
-        
+                   String tid = tbm1.getValueAt(csTable.getSelectedRow(), 0).toString();
+
+        String tName = tbm1.getValueAt(csTable.getSelectedRow(), 1).toString();
+        String temail = tbm1.getValueAt(csTable.getSelectedRow(), 2).toString();
+        String tadd = tbm1.getValueAt(csTable.getSelectedRow(), 3).toString();
+        String tcontact = tbm1.getValueAt(csTable.getSelectedRow(), 4).toString();
+           id.setText(tid);
         name.setText(tName);
         email.setText(temail);
         address.setText(tadd);
@@ -345,40 +333,51 @@ public class Customer extends javax.swing.JFrame {
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         // TODO add your handling code here:
         
-        DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
         
-        if (csTable.getSelectedRowCount() == 1) {
-            /* String tname= name.getText();
-     String temail= email.getText();
-     String tadd= address.getText();
-     String tcnoe= contactNo.getText();
-     
-      tbm1.getValueAt(csTable.getSelectedRow(), 0).toString();
-       tbm1.getValueAt(csTable.getSelectedRow(), 1).toString();
-        tbm1.getValueAt(csTable.getSelectedRow(), 2).toString();
-         tbm1.getValueAt(csTable.getSelectedRow(), 3).toString();
-             */
+        // String tname= name.getText();
+       //  String temail=email.getText();
+       //  String taddress= address.getText();
+        // String tNo= phnNo.getText();
+       // String pass= pass.getText();
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+
+            int row= csTable.getSelectedRow(); 
+            String value= (csTable.getModel().getValueAt(row, 0).toString());
+            String sql="UPADTE customer SET cName=?, cEmail=?,cAdress=?,cPhoneNo=? where customerId="+value;
             
-            String tName = tbm1.getValueAt(csTable.getSelectedRow(), 0).toString();
-            String temail = tbm1.getValueAt(csTable.getSelectedRow(), 1).toString();
-            String tadd = tbm1.getValueAt(csTable.getSelectedRow(), 2).toString();
-            String tcontact = tbm1.getValueAt(csTable.getSelectedRow(), 3).toString();
-            
-            name.setText(tName);
-            email.setText(temail);
-            address.setText(tadd);
-            contactNo.setText(tcontact);
-            
-            JOptionPane.showMessageDialog(this, "Updated Successfully.");
-            
-        } else {
-            if (csTable.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(this, "Table is empty.");
+             PreparedStatement prepare= connection.prepareStatement(sql);
+                 
+                 prepare.executeUpdate();
+         /*   
+            if (name.equals("")) {
+                JOptionPane.showMessageDialog(this, "Eniter Name");
+                    
+            }
+            else
+            {
                 
-            } else {
-                JOptionPane.showMessageDialog(this, "Please select a roe for update. ");
+                Statement statement = connection.createStatement();
+                
+             String sql = "INSERT INTO customer VALUES ('" + tname + "','" + temail + "','" + taddress + "','"+Integer.parseInt(tNo)+"')";
+
+                 PreparedStatement prepare= connection.prepareStatement(sql);
+                 
+                 prepare.executeUpdate();
+                // statement.executeQuery("INSERT INTO Admin_of_ISP VALUES ('"+name+"','"+pass+"')");
+                JOptionPane.showMessageDialog(this, "Registration Complete.");
+                  HomePage m=new HomePage();
+                //CLIENT_NAME,CLIENT_EMAIL,ADDRESS,PHONE,ANUAL_INCOME
             }
             
+            */
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_updateActionPerformed
 
@@ -432,6 +431,56 @@ public class Customer extends javax.swing.JFrame {
         
     }//GEN-LAST:event_saveActionPerformed
 
+    private void insActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insActionPerformed
+        // TODO add your handling code here:
+        
+         
+         String tname= name.getText();
+         String temail=email.getText();
+         String taddress= address.getText();
+         String tNo= contactNo.getText();
+       // String pass= pass.getText();
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+
+            
+            if (name.equals("")) {
+                JOptionPane.showMessageDialog(this, "Eniter Name");
+                    
+            }
+            else
+            {
+                
+                Statement statement = connection.createStatement();
+                
+             String sql = "INSERT INTO customer VALUES ('" + tname + "','" + temail + "','" + taddress + "','"+Integer.parseInt(tNo)+"')";
+
+                 PreparedStatement prepare= connection.prepareStatement(sql);
+                 
+                 prepare.executeUpdate();
+                 DefaultTableModel tbm=(DefaultTableModel)csTable.getModel();
+                 tbm.setRowCount(0);
+               //  show user();
+                 
+                // statement.executeQuery("INSERT INTO Admin_of_ISP VALUES ('"+name+"','"+pass+"')");
+                JOptionPane.showMessageDialog(this, "Registration Complete.");
+                 // HomePage m=new HomePage();
+                //CLIENT_NAME,CLIENT_EMAIL,ADDRESS,PHONE,ANUAL_INCOME
+            }
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_insActionPerformed
+
+    private void csTableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_csTableMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_csTableMouseEntered
+
     /**
      * @param args the command line arguments
      */
@@ -468,7 +517,6 @@ public class Customer extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton add;
     private javax.swing.JTextField address;
     private javax.swing.JPanel cInfo;
     private javax.swing.JTextField contactNo;
@@ -476,6 +524,7 @@ public class Customer extends javax.swing.JFrame {
     private javax.swing.JButton delete;
     private javax.swing.JTextField email;
     private javax.swing.JTextField id;
+    private javax.swing.JButton ins;
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
