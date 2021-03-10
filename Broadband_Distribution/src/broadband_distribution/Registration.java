@@ -7,6 +7,7 @@ package broadband_distribution;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -124,8 +125,14 @@ public class Registration extends javax.swing.JFrame {
             {
                 
                 Statement statement = connection.createStatement();
-                 statement.executeQuery("INSERT INTO Admin_of_ISP VALUES ('"+name+"','"+pass+"')");
-               // JOptionPane.showMessageDialog(this, "Registration Complete.");
+                
+                String sql="INSERT INTO Admin_of_ISP VALUES ('"+name+"','"+pass+"')";
+
+                 PreparedStatement prepare= connection.prepareStatement(sql);
+                 
+                 prepare.executeUpdate();
+                // statement.executeQuery("INSERT INTO Admin_of_ISP VALUES ('"+name+"','"+pass+"')");
+                JOptionPane.showMessageDialog(this, "Registration Complete.");
                   HomePage m=new HomePage();
                 //CLIENT_NAME,CLIENT_EMAIL,ADDRESS,PHONE,ANUAL_INCOME
             }

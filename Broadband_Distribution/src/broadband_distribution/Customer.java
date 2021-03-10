@@ -203,7 +203,7 @@ public class Customer extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         cInfo.setVisible(true);
-
+        
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection connection = DriverManager.getConnection(
@@ -214,22 +214,22 @@ public class Customer extends javax.swing.JFrame {
             String sql = "SELECT * FROM customer";
             ResultSet resultSet = statement
                     .executeQuery(sql);
-
+            
             while (resultSet.next()) {
-
+                
                 String id = resultSet.getString("customerId");
                 String fname = resultSet.getString("cName");
                 String femail = resultSet.getString("cEmail");
                 //  String ca= resultSet.getString("CoustomerAddress");
                 String fAd = resultSet.getString("cAdress");
                 String fNo = resultSet.getString("cPhoneNo");
-
+                
                 String tData[] = {id, fname, femail, fAd, fNo};
                 DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
                 tbm1.addRow(tData);
-
+                
             }
-
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -244,63 +244,111 @@ public class Customer extends javax.swing.JFrame {
         if (name.getText().equals("") || email.getText().equals("") || address.getText().equals("") || contactNo.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Enter all data");
         } else {
-            String data[] = {id.getText(), name.getText(), email.getText(), address.getText(), contactNo.getText()};
+             String id, tname, temail, taddress, tcontact;
+             tname= name.getText();
+             temail= email.getText();
+             taddress= address.getText();
+             tcontact= contactNo.getText();
+            try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
 
+            //  System.out.println("DATABASE NAME IS:" + connection.getMetaData().getDatabaseProductName());
+            Statement statement = connection.createStatement();
+            String sql = "INSERT INTO customer ('" + tname + "','" + temail + "','" + taddress + "','" + tcontact + "')";
+           // String sql = "SELECT * FROM customer";
+           // ResultSet resultSet = statement
+                 //   .executeQuery(sql);
+             PreparedStatement prepare = connection.prepareStatement(sql);
+             
+            //while (prepare.next()) {
+                
+              /*  String id = prepare.getString("customerId");
+                String fname = resultSet.getString("cName");
+                String femail = resultSet.getString("cEmail");
+                //  String ca= resultSet.getString("CoustomerAddress");
+                String fAd = resultSet.getString("cAdress");
+                String fNo = resultSet.getString("cPhoneNo");
+                
+                String tData[] = {id, fname, femail, fAd, fNo};
+                DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
+                tbm1.addRow(tData);
+            
+            */
+              prepare.executeUpdate();
+                
+           // }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            
+            
+            
+            
+            
+            
+            
+            
+        /*    
+            String data[] = {id.getText(), name.getText(), email.getText(), address.getText(), contactNo.getText()};
+            
             DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
             tbm1.addRow(data);
             JOptionPane.showMessageDialog(this, "Added successfully");
-
-            id.setText("");
+            
+           // id.setText("");
             name.setText("");
             email.setText("");
             address.setText("");
             contactNo.setText("");
-
+          */  
         }
     }//GEN-LAST:event_addActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         // TODO add your handling code here:
         DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
-
+        
         if (csTable.getSelectedRowCount() == 1) {
             tbm1.removeRow(csTable.getSelectedRow());
         } else {
             if (csTable.getRowCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Table Empty");
-
+                
             } else {
                 JOptionPane.showMessageDialog(this, "Please select a roe for delete. ");
             }
-
+            
         }
-
+        
 
     }//GEN-LAST:event_deleteActionPerformed
 
     private void csTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_csTableMouseClicked
         // TODO add your handling code here:
         DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
-
+        
         String tName = tbm1.getValueAt(csTable.getSelectedRow(), 0).toString();
         String temail = tbm1.getValueAt(csTable.getSelectedRow(), 1).toString();
         String tadd = tbm1.getValueAt(csTable.getSelectedRow(), 2).toString();
         String tcontact = tbm1.getValueAt(csTable.getSelectedRow(), 3).toString();
-            
-         name.setText(tName);
-            email.setText(temail);
-            address.setText(tadd);
-            contactNo.setText(tcontact);
+        
+        name.setText(tName);
+        email.setText(temail);
+        address.setText(tadd);
+        contactNo.setText(tcontact);
 
     }//GEN-LAST:event_csTableMouseClicked
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         // TODO add your handling code here:
         
-     DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
-      
-     if(csTable.getSelectedRowCount()==1){
-    /* String tname= name.getText();
+        DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
+        
+        if (csTable.getSelectedRowCount() == 1) {
+            /* String tname= name.getText();
      String temail= email.getText();
      String tadd= address.getText();
      String tcnoe= contactNo.getText();
@@ -309,82 +357,78 @@ public class Customer extends javax.swing.JFrame {
        tbm1.getValueAt(csTable.getSelectedRow(), 1).toString();
         tbm1.getValueAt(csTable.getSelectedRow(), 2).toString();
          tbm1.getValueAt(csTable.getSelectedRow(), 3).toString();
-         */
-    
-    String tName = tbm1.getValueAt(csTable.getSelectedRow(), 0).toString();
-        String temail = tbm1.getValueAt(csTable.getSelectedRow(), 1).toString();
-        String tadd = tbm1.getValueAt(csTable.getSelectedRow(), 2).toString();
-        String tcontact = tbm1.getValueAt(csTable.getSelectedRow(), 3).toString();
-        
-         name.setText(tName);
+             */
+            
+            String tName = tbm1.getValueAt(csTable.getSelectedRow(), 0).toString();
+            String temail = tbm1.getValueAt(csTable.getSelectedRow(), 1).toString();
+            String tadd = tbm1.getValueAt(csTable.getSelectedRow(), 2).toString();
+            String tcontact = tbm1.getValueAt(csTable.getSelectedRow(), 3).toString();
+            
+            name.setText(tName);
             email.setText(temail);
             address.setText(tadd);
             contactNo.setText(tcontact);
-         
-    JOptionPane.showMessageDialog(this, "Updated Successfully.");
-
-     }
-     else{
-         if(csTable.getRowCount()==0){
-        JOptionPane.showMessageDialog(this, "Table is empty.");
-
-         }else
-      JOptionPane.showMessageDialog(this, "Please select a roe for update. ");
-
-     }
+            
+            JOptionPane.showMessageDialog(this, "Updated Successfully.");
+            
+        } else {
+            if (csTable.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table is empty.");
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Please select a roe for update. ");
+            }
+            
+        }
     }//GEN-LAST:event_updateActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
         // TODO add your handling code here:
-            DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
-            if(tbm1.getRowCount()==0){
-              JOptionPane.showMessageDialog(this, "Table is empty.");   
-            }
-            else
-            {
-                String id,name, email, adress,contact;
-                 try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+        DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
+        if (tbm1.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Table is empty.");            
+        } else {
+            String id, name, email, adress, contact;
+            try {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection connection = DriverManager.getConnection(
+                        "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
 
-            //  System.out.println("DATABASE NAME IS:" + connection.getMetaData().getDatabaseProductName());
-           for(int i=0;i<tbm1.getRowCount();i++){
-               id=tbm1.getValueAt(i, 0).toString();
-               name=tbm1.getValueAt(i, 1).toString();
-               email=tbm1.getValueAt(i, 2).toString();
-               adress=tbm1.getValueAt(i, 3).toString();
-               contact=tbm1.getValueAt(i, 4).toString();
-               
-           
-            Statement statement = connection.createStatement();
-           // String sql = "insert into customer(cName,cEmail,cAdress,cPhnoneNo) values(?,?,?,?,?)";
-             //  statement.executeQuery("INSERT INTO customer ('"+id+"','"+name+"','"+email+"','"+adress+"','"+contact+"')");
-                  String sql= "INSERT INTO customer ('"+id+"','"+name+"','"+email+"','"+adress+"','"+contact+"')";
-           // ResultSet resultSet = statement
-            //        .executeQuery(sql);
-            
-            PreparedStatement prepare= connection.prepareStatement(sql);
+                //  System.out.println("DATABASE NAME IS:" + connection.getMetaData().getDatabaseProductName());
+                for (int i = 0; i < tbm1.getRowCount(); i++) {
+                    id = tbm1.getValueAt(i, 0).toString();
+                    name = tbm1.getValueAt(i, 1).toString();
+                    email = tbm1.getValueAt(i, 2).toString();
+                    adress = tbm1.getValueAt(i, 3).toString();
+                    contact = tbm1.getValueAt(i, 4).toString();
+                    
+                    Statement statement = connection.createStatement();
+                    // String sql = "insert into customer(cName,cEmail,cAdress,cPhnoneNo) values(?,?,?,?,?)";
+                    //  statement.executeQuery("INSERT INTO customer ('"+id+"','"+name+"','"+email+"','"+adress+"','"+contact+"')");
+                    String sql = "INSERT INTO customer ('" + id + "','" + name + "','" + email + "','" + adress + "','" + contact + "')";
+                    // ResultSet resultSet = statement
+                    //        .executeQuery(sql);
+                    
+                    PreparedStatement prepare = connection.prepareStatement(sql);
 //           prepare.setString(1, id);
-            prepare.setString(1, name);
-            prepare.setString(2,email);
-             prepare.setString(2, adress);
-              prepare.setString(4, contact);
-              
-              prepare.execute();
-              
-           }
-           
-              JOptionPane.showMessageDialog(this, "DOne");
-              
-              tbm1.setRowCount(0);
-          
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                    prepare.setString(1, name);
+                    prepare.setString(2, email);
+                    prepare.setString(2, adress);
+                    prepare.setString(4, contact);
+                    
+                    prepare.execute();
+                    
+                }
                 
+                JOptionPane.showMessageDialog(this, "DOne");
+                
+                tbm1.setRowCount(0);
+                
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            
+        }
         
     }//GEN-LAST:event_saveActionPerformed
 
