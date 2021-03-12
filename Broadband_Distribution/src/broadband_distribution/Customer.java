@@ -50,7 +50,6 @@ public class Customer extends javax.swing.JFrame {
         contactNo = new javax.swing.JTextField();
         update = new javax.swing.JButton();
         delete = new javax.swing.JButton();
-        save = new javax.swing.JButton();
         id = new javax.swing.JTextField();
         ins = new javax.swing.JButton();
 
@@ -102,6 +101,12 @@ public class Customer extends javax.swing.JFrame {
             }
         });
 
+        contactNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contactNoActionPerformed(evt);
+            }
+        });
+
         update.setText("Update");
         update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,10 +121,9 @@ public class Customer extends javax.swing.JFrame {
             }
         });
 
-        save.setText("Save");
-        save.addActionListener(new java.awt.event.ActionListener() {
+        id.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveActionPerformed(evt);
+                idActionPerformed(evt);
             }
         });
 
@@ -137,10 +141,6 @@ public class Customer extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(85, 85, 85)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -157,11 +157,13 @@ public class Customer extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(save)
-                                            .addComponent(ins))
+                                        .addComponent(ins)
                                         .addGap(4, 4, 4))
                                     .addComponent(delete, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(cInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(84, Short.MAX_VALUE))
@@ -191,9 +193,7 @@ public class Customer extends javax.swing.JFrame {
                         .addGap(28, 28, 28)
                         .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(save)
-                            .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(contactNo, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(138, 138, 138))))
@@ -365,52 +365,6 @@ public class Customer extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_updateActionPerformed
 
-    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        // TODO add your handling code here:
-        DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
-        if (tbm1.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Table is empty.");
-        } else {
-            String id, name, email, adress, contact;
-            try {
-                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection connection = DriverManager.getConnection(
-                        "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
-
-                for (int i = 0; i < tbm1.getRowCount(); i++) {
-                    id = tbm1.getValueAt(i, 0).toString();
-                    name = tbm1.getValueAt(i, 1).toString();
-                    email = tbm1.getValueAt(i, 2).toString();
-                    adress = tbm1.getValueAt(i, 3).toString();
-                    contact = tbm1.getValueAt(i, 4).toString();
-
-                    Statement statement = connection.createStatement();
-
-                    String sql = "INSERT INTO customer ('" + id + "','" + name + "','" + email + "','" + adress + "','" + contact + "')";
-
-                    PreparedStatement prepare = connection.prepareStatement(sql);
-
-                    prepare.setString(1, name);
-                    prepare.setString(2, email);
-                    prepare.setString(2, adress);
-                    prepare.setString(4, contact);
-
-                    prepare.execute();
-
-                }
-
-                JOptionPane.showMessageDialog(this, "DOne");
-
-                tbm1.setRowCount(0);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-
-    }//GEN-LAST:event_saveActionPerformed
-
     private void insActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insActionPerformed
         // TODO add your handling code here:
 
@@ -454,6 +408,14 @@ public class Customer extends javax.swing.JFrame {
     private void csTableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_csTableMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_csTableMouseEntered
+
+    private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idActionPerformed
+
+    private void contactNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactNoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contactNoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -503,7 +465,6 @@ public class Customer extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField name;
-    private javax.swing.JButton save;
     private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
 }
