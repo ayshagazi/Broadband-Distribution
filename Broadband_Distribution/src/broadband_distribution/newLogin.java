@@ -57,7 +57,7 @@ public class newLogin extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel1.setText("BROADBAND DISTRIBUTION");
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ishfaq\\Desktop\\unnamed.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGE/WIFI.png"))); // NOI18N
 
         javax.swing.GroupLayout lsideLayout = new javax.swing.GroupLayout(lside);
         lside.setLayout(lsideLayout);
