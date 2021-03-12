@@ -216,33 +216,32 @@ public class Customer extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         cInfo.setVisible(true);
-        
+
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection connection = DriverManager.getConnection(
                     "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
 
-            //  System.out.println("DATABASE NAME IS:" + connection.getMetaData().getDatabaseProductName());
             Statement statement = connection.createStatement();
             String sql = "SELECT * FROM customer";
             ResultSet resultSet = statement
                     .executeQuery(sql);
-            
+
             while (resultSet.next()) {
-                
+
                 String id = resultSet.getString("customerId");
                 String fname = resultSet.getString("cName");
                 String femail = resultSet.getString("cEmail");
-                //  String ca= resultSet.getString("CoustomerAddress");
+
                 String fAd = resultSet.getString("cAdress");
                 String fNo = resultSet.getString("cPhoneNo");
-                
+
                 String tData[] = {id, fname, femail, fAd, fNo};
                 DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
                 tbm1.addRow(tData);
-                
+
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -254,75 +253,73 @@ public class Customer extends javax.swing.JFrame {
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
-        
+
+        String tname = "", temail = "", taddress = "", customerId = "";
+        int tNo;
+        DefaultTableModel defaultTableModel = (DefaultTableModel) csTable.getModel();
+
         if (csTable.getSelectedRowCount() == 1) {
-            //tbm1.removeRow(csTable.getSelectedRow());
-         String tname= name.getText();
-         String temail=email.getText();
-         String taddress= address.getText();
-         String tNo= contactNo.getText();
-       // String pass= pass.getText();
-        try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
 
-            
-            if (name.equals("")) {
-                JOptionPane.showMessageDialog(this, "Eniter Name");
-                    
-            }
-            else
-            {
-                
-                Statement statement = connection.createStatement();
-                
-             String sql = "DELETE FROM customer WHERE customerID=14";
-                  //   + " ('" + tname + "','" + temail + "','" + taddress + "','"+Integer.parseInt(tNo)+"')";
+            tname = name.getText();
+            temail = email.getText();
+            taddress = address.getText();
+            tNo = Integer.parseInt(contactNo.getText());
 
-                 PreparedStatement prepare= connection.prepareStatement(sql);
-                 
-                 prepare.executeUpdate();
-                // statement.executeQuery("INSERT INTO Admin_of_ISP VALUES ('"+name+"','"+pass+"')");
-                JOptionPane.showMessageDialog(this, "Registration Complete.");
-                  HomePage m=new HomePage();
-                //CLIENT_NAME,CLIENT_EMAIL,ADDRESS,PHONE,ANUAL_INCOME
+            int row = csTable.getSelectedRow();
+            customerId = defaultTableModel.getValueAt(row, 0).toString();
+
+            try {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection connection = DriverManager.getConnection(
+                        "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+
+                if (name.equals("")) {
+                    JOptionPane.showMessageDialog(this, "Eniter Name");
+
+                } else {
+
+                    Statement statement = connection.createStatement();
+
+                    String sql = "DELETE FROM customer WHERE customerId = " + Integer.parseInt(customerId) + ";";
+
+                    PreparedStatement prepare = connection.prepareStatement(sql);
+
+                    prepare.executeUpdate();
+
+                    JOptionPane.showMessageDialog(this, "Deleted Successfully");
+
+                }
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
             }
-            connection.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            
-            
-            
-            
+
         } else {
             if (csTable.getRowCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Table Empty");
-                
+
             } else {
                 JOptionPane.showMessageDialog(this, "Please select a roe for delete. ");
             }
-            
+
         }
-        
+
 
     }//GEN-LAST:event_deleteActionPerformed
 
     private void csTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_csTableMouseClicked
         // TODO add your handling code here:
         DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
-        
-                   String tid = tbm1.getValueAt(csTable.getSelectedRow(), 0).toString();
+
+        String tid = tbm1.getValueAt(csTable.getSelectedRow(), 0).toString();
 
         String tName = tbm1.getValueAt(csTable.getSelectedRow(), 1).toString();
         String temail = tbm1.getValueAt(csTable.getSelectedRow(), 2).toString();
         String tadd = tbm1.getValueAt(csTable.getSelectedRow(), 3).toString();
         String tcontact = tbm1.getValueAt(csTable.getSelectedRow(), 4).toString();
-           id.setText(tid);
+        id.setText(tid);
         name.setText(tName);
         email.setText(temail);
         address.setText(tadd);
@@ -332,52 +329,39 @@ public class Customer extends javax.swing.JFrame {
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         // TODO add your handling code here:
-        
-        
-        // String tname= name.getText();
-       //  String temail=email.getText();
-       //  String taddress= address.getText();
-        // String tNo= phnNo.getText();
-       // String pass= pass.getText();
-        try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+        String tname = "", temail = "", taddress = "", customerId = "";
+        int tNo;
+        DefaultTableModel defaultTableModel = (DefaultTableModel) csTable.getModel();
 
-            int row= csTable.getSelectedRow(); 
-            String value= (csTable.getModel().getValueAt(row, 0).toString());
-            String sql="UPADTE customer SET cName=?, cEmail=?,cAdress=?,cPhoneNo=? where customerId="+value;
-            
-             PreparedStatement prepare= connection.prepareStatement(sql);
-                 
-                 prepare.executeUpdate();
-         /*   
-            if (name.equals("")) {
-                JOptionPane.showMessageDialog(this, "Eniter Name");
-                    
-            }
-            else
-            {
-                
-                Statement statement = connection.createStatement();
-                
-             String sql = "INSERT INTO customer VALUES ('" + tname + "','" + temail + "','" + taddress + "','"+Integer.parseInt(tNo)+"')";
+        if (csTable.getSelectedRowCount() == 1) {
+            //   System.out.println("at update");
 
-                 PreparedStatement prepare= connection.prepareStatement(sql);
-                 
-                 prepare.executeUpdate();
-                // statement.executeQuery("INSERT INTO Admin_of_ISP VALUES ('"+name+"','"+pass+"')");
-                JOptionPane.showMessageDialog(this, "Registration Complete.");
-                  HomePage m=new HomePage();
-                //CLIENT_NAME,CLIENT_EMAIL,ADDRESS,PHONE,ANUAL_INCOME
+            tname = name.getText();
+            temail = email.getText();
+            taddress = address.getText();
+            tNo = Integer.parseInt(contactNo.getText());
+
+            int row = csTable.getSelectedRow();
+            customerId = defaultTableModel.getValueAt(row, 0).toString();
+
+            try {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection connection = DriverManager.getConnection(
+                        "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+
+                String sql = "UPDATE customer SET cName='" + tname + "', cEmail='" + temail + "',cAdress='" + taddress + "',cPhoneNo=" + tNo + " where customerId = " + Integer.parseInt(customerId) + ";";
+
+                PreparedStatement prepare = connection.prepareStatement(sql);
+
+                prepare.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Successfully Updated.");
+
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            */
-            connection.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_updateActionPerformed
 
@@ -385,7 +369,7 @@ public class Customer extends javax.swing.JFrame {
         // TODO add your handling code here:
         DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
         if (tbm1.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Table is empty.");            
+            JOptionPane.showMessageDialog(this, "Table is empty.");
         } else {
             String id, name, email, adress, contact;
             try {
@@ -393,81 +377,71 @@ public class Customer extends javax.swing.JFrame {
                 Connection connection = DriverManager.getConnection(
                         "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
 
-                //  System.out.println("DATABASE NAME IS:" + connection.getMetaData().getDatabaseProductName());
                 for (int i = 0; i < tbm1.getRowCount(); i++) {
                     id = tbm1.getValueAt(i, 0).toString();
                     name = tbm1.getValueAt(i, 1).toString();
                     email = tbm1.getValueAt(i, 2).toString();
                     adress = tbm1.getValueAt(i, 3).toString();
                     contact = tbm1.getValueAt(i, 4).toString();
-                    
+
                     Statement statement = connection.createStatement();
-                    // String sql = "insert into customer(cName,cEmail,cAdress,cPhnoneNo) values(?,?,?,?,?)";
-                    //  statement.executeQuery("INSERT INTO customer ('"+id+"','"+name+"','"+email+"','"+adress+"','"+contact+"')");
+
                     String sql = "INSERT INTO customer ('" + id + "','" + name + "','" + email + "','" + adress + "','" + contact + "')";
-                    // ResultSet resultSet = statement
-                    //        .executeQuery(sql);
-                    
+
                     PreparedStatement prepare = connection.prepareStatement(sql);
-//           prepare.setString(1, id);
+
                     prepare.setString(1, name);
                     prepare.setString(2, email);
                     prepare.setString(2, adress);
                     prepare.setString(4, contact);
-                    
+
                     prepare.execute();
-                    
+
                 }
-                
+
                 JOptionPane.showMessageDialog(this, "DOne");
-                
+
                 tbm1.setRowCount(0);
-                
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            
+
         }
-        
+
     }//GEN-LAST:event_saveActionPerformed
 
     private void insActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insActionPerformed
         // TODO add your handling code here:
-        
-         
-         String tname= name.getText();
-         String temail=email.getText();
-         String taddress= address.getText();
-         String tNo= contactNo.getText();
-       // String pass= pass.getText();
+
+        String tname = name.getText();
+        String temail = email.getText();
+        String taddress = address.getText();
+        String tNo = contactNo.getText();
+
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection connection = DriverManager.getConnection(
                     "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
 
-            
             if (name.equals("")) {
                 JOptionPane.showMessageDialog(this, "Eniter Name");
-                    
-            }
-            else
-            {
-                
-                Statement statement = connection.createStatement();
-                
-             String sql = "INSERT INTO customer VALUES ('" + tname + "','" + temail + "','" + taddress + "','"+Integer.parseInt(tNo)+"')";
 
-                 PreparedStatement prepare= connection.prepareStatement(sql);
-                 
-                 prepare.executeUpdate();
-                 DefaultTableModel tbm=(DefaultTableModel)csTable.getModel();
-                 tbm.setRowCount(0);
-               //  show user();
-                 
-                // statement.executeQuery("INSERT INTO Admin_of_ISP VALUES ('"+name+"','"+pass+"')");
+            } else {
+
+                Statement statement = connection.createStatement();
+
+                String sql = "INSERT INTO customer VALUES ('" + tname + "','" + temail + "','" + taddress + "','" + Integer.parseInt(tNo) + "')";
+
+                PreparedStatement prepare = connection.prepareStatement(sql);
+
+                prepare.executeUpdate();
+                DefaultTableModel tbm = (DefaultTableModel) csTable.getModel();
+                tbm.setRowCount(0);
+                //  show user();
+
                 JOptionPane.showMessageDialog(this, "Registration Complete.");
-                 // HomePage m=new HomePage();
-                //CLIENT_NAME,CLIENT_EMAIL,ADDRESS,PHONE,ANUAL_INCOME
+
             }
             connection.close();
         } catch (SQLException ex) {

@@ -112,8 +112,7 @@ public class Login extends javax.swing.JFrame {
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         // TODO add your handling code here:
         
-       // Broadband_Distribution cnObj = new Broadband_Distribution();
-        //cnObj.connectDB();
+      
        try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection connection = DriverManager.getConnection(
@@ -123,8 +122,7 @@ public class Login extends javax.swing.JFrame {
             String pass= passs.getText();
             
             Statement statement = connection.createStatement();
-             //String Client_Name = null;
-             //String Email = null;
+          
                ResultSet resultSet = statement.executeQuery("SELECT * FROM Admin_of_ISP WHERE name= '"+username+"' and password = '"+pass+"'");
             
             if (resultSet.next()) {

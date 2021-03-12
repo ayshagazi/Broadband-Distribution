@@ -133,7 +133,9 @@ public class Registration extends javax.swing.JFrame {
                  prepare.executeUpdate();
                 // statement.executeQuery("INSERT INTO Admin_of_ISP VALUES ('"+name+"','"+pass+"')");
                 JOptionPane.showMessageDialog(this, "Registration Complete.");
-                  HomePage m=new HomePage();
+                dispose();
+                 Login m=new Login();
+                 m.show();
                 //CLIENT_NAME,CLIENT_EMAIL,ADDRESS,PHONE,ANUAL_INCOME
             }
             connection.close();
