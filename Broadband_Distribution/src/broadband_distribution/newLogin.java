@@ -108,7 +108,7 @@ public class newLogin extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Already Have An Account?");
 
-        login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/broadband_distribution/loginIMAGE.jpg"))); // NOI18N
+        login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGE/loginIMAGE.jpg"))); // NOI18N
         login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginActionPerformed(evt);
