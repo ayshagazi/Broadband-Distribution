@@ -26,8 +26,8 @@ public class CustomerProfile extends javax.swing.JFrame {
 
     CustomerProfile(String customerId) {
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-       initComponents();
-      
+      initComponents();
+    //  jPanel2.setVisible(true);
      //  id.setText(customerId);
        this.customerId= customerId;
      //  value= id;
