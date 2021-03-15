@@ -51,7 +51,7 @@ public class billing extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Bill Id", "Customer ID", "Amount", "Deadline", "Method", "Status"
+                "Bill Id", "Customer ID", "Name", "Amount", "Status", "Contact No"
             }
         ));
         jScrollPane1.setViewportView(billTable);
@@ -70,7 +70,7 @@ public class billing extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Name", "ID", "Status" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -130,6 +130,91 @@ public class billing extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+        String value= jComboBox1.getSelectedItem().toString();
+        if(value.equals("ID")){
+            try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+
+            String dead= deadline.getText();
+           // String size= jTextField2.getText();
+            
+            Statement statement = connection.createStatement();
+            
+             //String Client_Name = null;
+             //String Email = null;
+               ResultSet resultSet = statement.executeQuery("SELECT * FROM bill WHERE customerId = '"+ Integer.parseInt(dead) +"'" );
+            
+            if (resultSet.next()) {
+               
+                 String Bid = resultSet.getString("billId");
+                String Cid = resultSet.getString("customerId");
+                String amount = resultSet.getString("amount");
+
+                String deadline = resultSet.getString("deadline");
+                String method = resultSet.getString("method");
+                String stat= resultSet.getString("status");
+
+                String tData[] = {Bid, Cid,amount,deadline,method,stat};
+                DefaultTableModel tbm1 = (DefaultTableModel) billTable.getModel();
+                tbm1.addRow(tData);
+                
+       
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Enter Keyword");
+                   
+            }
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        }
+        
+        else if(value.equals("Status")){
+             try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+
+            String dead= deadline.getText();
+           // String size= jTextField2.getText();
+            
+            Statement statement = connection.createStatement();
+            
+             //String Client_Name = null;
+             //String Email = null;
+               ResultSet resultSet = statement.executeQuery("SELECT * FROM bill WHERE status = '"+ dead +"'" );
+            
+            if (resultSet.next()) {
+               
+                 String Bid = resultSet.getString("billId");
+                String Cid = resultSet.getString("customerId");
+                String amount = resultSet.getString("amount");
+
+                String deadline = resultSet.getString("deadline");
+                String method = resultSet.getString("method");
+                String stat= resultSet.getString("status");
+
+                String tData[] = {Bid, Cid,amount,deadline,method,stat};
+                DefaultTableModel tbm1 = (DefaultTableModel) billTable.getModel();
+                tbm1.addRow(tData);
+                
+       
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Enter Keyword");
+                   
+            }
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        }
+        
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -141,7 +226,10 @@ public class billing extends javax.swing.JFrame {
                     "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
 
             Statement statement = connection.createStatement();
-            String sql = "SELECT * FROM bill";
+            //String sql = "SELECT * FROM bill";
+            
+            String sql= "SELECT bill.billId, customer.customerId, customer.cName, bill.amount, bill.status,customer.cPhoneNo From bill INNER JOIN customer ON bill.customerId=customer.customerId ";
+            
             ResultSet resultSet = statement
                     .executeQuery(sql);
 
@@ -149,11 +237,11 @@ public class billing extends javax.swing.JFrame {
 
                 String Bid = resultSet.getString("billId");
                 String Cid = resultSet.getString("customerId");
-                String amount = resultSet.getString("amount");
+                String amount = resultSet.getString("cName");
 
-                String deadline = resultSet.getString("deadline");
-                String method = resultSet.getString("method");
-                String stat= resultSet.getString("status");
+                String deadline = resultSet.getString("amount");
+                String method = resultSet.getString("status");
+                String stat= resultSet.getString("cPhoneNo");
 
                 String tData[] = {Bid, Cid,amount,deadline,method,stat};
                 DefaultTableModel tbm1 = (DefaultTableModel) billTable.getModel();
@@ -168,7 +256,7 @@ public class billing extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        
+     /*   
          try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection connection = DriverManager.getConnection(
@@ -207,6 +295,8 @@ public class billing extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+         
+         */
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void deadlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deadlineActionPerformed
