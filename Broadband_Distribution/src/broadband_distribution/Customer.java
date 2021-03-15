@@ -446,8 +446,11 @@ public class Customer extends javax.swing.JFrame {
 
         // TODO add your handling code here:
          try {
+             dispose();
                 CustomerProfile frame = new CustomerProfile();
-                frame.setVisible(true);
+                frame.show();
+               // frame.setVisible(true);
+                
             } catch (Exception e) {
                 e.printStackTrace();
             }
