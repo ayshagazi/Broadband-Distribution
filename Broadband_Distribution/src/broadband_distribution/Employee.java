@@ -154,7 +154,6 @@ public class Employee extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(204, 204, 204));
-        jButton1.setIcon(new javax.swing.ImageIcon("E:\\C.S.E 3.1\\Project 3.1 DB\\letest\\Broadband-Distribution\\Broadband_Distribution\\src\\IMAGE\\home.png")); // NOI18N
         jButton1.setText("EMPLOYEE");
         jButton1.setBorder(null);
         jButton1.setContentAreaFilled(false);
@@ -173,7 +172,6 @@ public class Employee extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(204, 204, 204));
-        jButton2.setIcon(new javax.swing.ImageIcon("E:\\C.S.E 3.1\\Project 3.1 DB\\letest\\Broadband-Distribution\\Broadband_Distribution\\src\\IMAGE\\PEOPLE.png")); // NOI18N
         jButton2.setText("ADD NEW");
         jButton2.setBorder(null);
         jButton2.setContentAreaFilled(false);
@@ -200,7 +198,6 @@ public class Employee extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(204, 204, 204));
-        jButton3.setIcon(new javax.swing.ImageIcon("E:\\C.S.E 3.1\\Project 3.1 DB\\letest\\Broadband-Distribution\\Broadband_Distribution\\src\\IMAGE\\UPDATES.png")); // NOI18N
         jButton3.setText("UPDATE");
         jButton3.setBorder(null);
         jButton3.setContentAreaFilled(false);
@@ -227,7 +224,6 @@ public class Employee extends javax.swing.JFrame {
 
         jButton5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton5.setForeground(new java.awt.Color(204, 204, 204));
-        jButton5.setIcon(new javax.swing.ImageIcon("E:\\C.S.E 3.1\\Project 3.1 DB\\letest\\Broadband-Distribution\\Broadband_Distribution\\src\\IMAGE\\WORKER.png")); // NOI18N
         jButton5.setText("SCHEDULE");
         jButton5.setBorder(null);
         jButton5.setContentAreaFilled(false);
@@ -267,7 +263,6 @@ public class Employee extends javax.swing.JFrame {
 
         jButton6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton6.setForeground(new java.awt.Color(204, 204, 204));
-        jButton6.setIcon(new javax.swing.ImageIcon("E:\\C.S.E 3.1\\Project 3.1 DB\\letest\\Broadband-Distribution\\Broadband_Distribution\\src\\IMAGE\\SALARY 33.png")); // NOI18N
         jButton6.setText("SALARY");
         jButton6.setBorder(null);
         jButton6.setContentAreaFilled(false);
@@ -353,6 +348,11 @@ public class Employee extends javax.swing.JFrame {
         jComboBox1.setBackground(new java.awt.Color(0, 153, 255));
         jComboBox1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NAME", "ID" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel6.setText("ENTER KEYWORDS :");
@@ -461,6 +461,10 @@ public class Employee extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_jButton1MouseEntered
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
