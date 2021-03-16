@@ -262,7 +262,7 @@ public class Registration extends javax.swing.JFrame {
                 // statement.executeQuery("INSERT INTO Admin_of_ISP VALUES ('"+name+"','"+pass+"')");
                 JOptionPane.showMessageDialog(this, "Registration Complete.");
                 dispose();
-                newLogin m=new newLogin();
+                Login m=new Login();
                 m.show();
                 //CLIENT_NAME,CLIENT_EMAIL,ADDRESS,PHONE,ANUAL_INCOME
             }
