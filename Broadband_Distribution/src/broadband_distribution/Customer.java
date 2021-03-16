@@ -56,6 +56,7 @@ public class Customer extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGE/WIFI.png"))); // NOI18N
         jButton2.setText("Customer Info");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
