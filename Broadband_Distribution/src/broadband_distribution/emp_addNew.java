@@ -163,6 +163,7 @@ public class emp_addNew extends javax.swing.JFrame {
         String t= time.getText();
         String p= pos.getText();
         String s= salary.getText();
+        
         Float sa= Float.parseFloat(s);
         DecimalFormat df= new DecimalFormat("0.00");
         df.setMaximumFractionDigits(2);
@@ -182,19 +183,24 @@ public class emp_addNew extends javax.swing.JFrame {
 
                 Statement statement = connection.createStatement();
 
-                String sql = "INSERT INTO employee VALUES ('" + nameF + "','" + nameL + "','" +temail +"','"+taddress+"','" + Integer.parseInt(tNo) + "','"+a+"')";
-                String sql1 = "INSERT INTO salary VALUES ('" + s  + "','" +p  + "')";
+                String sql1 = "INSERT INTO employee VALUES ('" + nameF + "','" + nameL + "','" +temail +"','"+taddress+"','" + Integer.parseInt(tNo) + "','"+a+"')";
+                String sql2 = "INSERT INTO salary VALUES ('" + s  + "','" +p  + "')";
                 String sql3 = "INSERT INTO schedule VALUES ('" + h  + "','"+Integer.parseInt(t)+"');";
 
                 
-                PreparedStatement prepare = connection.prepareStatement(sql);
+                PreparedStatement prepare1 = connection.prepareStatement(sql1);
+                 PreparedStatement prepare2 = connection.prepareStatement(sql2);
+                  PreparedStatement prepare3 = connection.prepareStatement(sql3);
+                  
 
-                prepare.executeUpdate();
+                prepare1.executeUpdate();
+                prepare2.executeUpdate();
+                prepare3.executeUpdate();
               //  DefaultTableModel tbm = (DefaultTableModel) csTable.getModel();
                // tbm.setRowCount(0);
                 //  show user();
 
-                JOptionPane.showMessageDialog(this, "Registration Complete.");
+                JOptionPane.showMessageDialog(this, "Added successfully.");
 
             //}
             connection.close();
