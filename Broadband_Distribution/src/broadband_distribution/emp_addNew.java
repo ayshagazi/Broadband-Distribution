@@ -165,9 +165,9 @@ public class emp_addNew extends javax.swing.JFrame {
         String s= salary.getText();
         
         Float sa= Float.parseFloat(s);
-        DecimalFormat df= new DecimalFormat("0.00");
-        df.setMaximumFractionDigits(2);
-        s= df.format(sa);
+      //  DecimalFormat df= new DecimalFormat("0.00");
+     //   df.setMaximumFractionDigits(2);
+      //  s= df.format(sa);
       
        
 
@@ -183,19 +183,19 @@ public class emp_addNew extends javax.swing.JFrame {
 
                 Statement statement = connection.createStatement();
 
-                String sql1 = "INSERT INTO employee VALUES ('" + nameF + "','" + nameL + "','" +temail +"','"+taddress+"','" + Integer.parseInt(tNo) + "','"+a+"')";
-                String sql2 = "INSERT INTO salary VALUES ('" + s  + "','" +p  + "')";
-                String sql3 = "INSERT INTO schedule VALUES ('" + h  + "','"+Integer.parseInt(t)+"');";
+              //  String sql1 = "INSERT INTO employee VALUES ('" + nameF + "','" + nameL + "','" +temail +"','"+taddress+"','" + Integer.parseInt(tNo) + "','"+a+"')";
+                String sql2 = "INSERT INTO salary VALUES (" + sa  + ",'" +p  + "')";
+              //  String sql3 = "INSERT INTO schedule VALUES ('" + h  + "','"+Integer.parseInt(t)+"');";
 
                 
-                PreparedStatement prepare1 = connection.prepareStatement(sql1);
+             //   PreparedStatement prepare1 = connection.prepareStatement(sql1);
                  PreparedStatement prepare2 = connection.prepareStatement(sql2);
-                  PreparedStatement prepare3 = connection.prepareStatement(sql3);
+                //  PreparedStatement prepare3 = connection.prepareStatement(sql3);
                   
 
-                prepare1.executeUpdate();
+               // prepare1.executeUpdate();
                 prepare2.executeUpdate();
-                prepare3.executeUpdate();
+              //  prepare3.executeUpdate();
               //  DefaultTableModel tbm = (DefaultTableModel) csTable.getModel();
                // tbm.setRowCount(0);
                 //  show user();
