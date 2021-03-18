@@ -43,7 +43,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="lside" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -54,11 +54,11 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <EmptySpace min="0" pref="548" max="32767" attributes="0"/>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lside" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jPanel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lside" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -134,20 +134,12 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                      <Component id="rside5" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="rside5" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="rside5" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="rside5" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -189,7 +181,7 @@
                                               <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                                               <Component id="Rname" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace pref="32" max="32767" attributes="0"/>
+                                          <EmptySpace pref="74" max="32767" attributes="0"/>
                                       </Group>
                                       <Component id="jSeparator5" max="32767" attributes="0"/>
                                   </Group>
@@ -229,7 +221,7 @@
                           </Group>
                           <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                           <Component id="reg" min="-2" pref="27" max="-2" attributes="0"/>
-                          <EmptySpace pref="183" max="32767" attributes="0"/>
+                          <EmptySpace pref="209" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>

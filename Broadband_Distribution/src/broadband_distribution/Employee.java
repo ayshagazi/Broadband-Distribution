@@ -96,7 +96,7 @@ public class Employee extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        keyword = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         empTable = new javax.swing.JTable();
@@ -398,9 +398,14 @@ public class Employee extends javax.swing.JFrame {
         jButton4.setBackground(new java.awt.Color(153, 153, 153));
         jButton4.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jButton4.setText("SREACH");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
-        jTextField1.setBorder(null);
-        jTextField1.setOpaque(false);
+        keyword.setBorder(null);
+        keyword.setOpaque(false);
 
         empTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         empTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -427,7 +432,7 @@ public class Employee extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                    .addComponent(jTextField1))
+                    .addComponent(keyword))
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
                 .addGap(46, 46, 46))
@@ -448,7 +453,7 @@ public class Employee extends javax.swing.JFrame {
                             .addComponent(jButton4)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(keyword, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
@@ -510,6 +515,92 @@ public class Employee extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+         String value= jComboBox1.getSelectedItem().toString();
+        if(value.equals("ID")){
+            try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+
+            String dead= keyword.getText();
+           // String size= jTextField2.getText();
+            
+            Statement statement = connection.createStatement();
+            
+             //String Client_Name = null;
+             //String Email = null;
+               ResultSet resultSet = statement.executeQuery("SELECT * FROM employee WHERE employeeId = '"+ Integer.parseInt(dead) +"'" );
+            
+            if (resultSet.next()) {
+               
+               String id = resultSet.getString("employeeId");
+                String fname = resultSet.getString("eFame");
+                String lname = resultSet.getString("elastName");
+
+  String email = resultSet.getString("eEmail");
+                String fAd = resultSet.getString("eAdress");
+                String fNo = resultSet.getString("ephoneNo");
+ String wa = resultSet.getString("working_area");
+                String tData[] = {id, fname,lname, email, fAd, fNo,wa};
+                DefaultTableModel tbm1 = (DefaultTableModel) empTable.getModel();
+                tbm1.addRow(tData);
+       
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Enter Keyword");
+                   
+            }
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        }
+        
+        else if(value.equals("NAME")){
+             try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+
+            String dead= keyword.getText();
+           // String size= jTextField2.getText();
+            
+            Statement statement = connection.createStatement();
+            
+             //String Client_Name = null;
+             //String Email = null;
+               ResultSet resultSet = statement.executeQuery("SELECT * FROM employee WHERE eFame like '"+ dead +"%' or elastName like '"+dead+"%'" );
+            
+            if (resultSet.next()) {
+               String id = resultSet.getString("employeeId");
+                String fname = resultSet.getString("eFame");
+                String lname = resultSet.getString("elastName");
+
+  String email = resultSet.getString("eEmail");
+                String fAd = resultSet.getString("eAdress");
+                String fNo = resultSet.getString("ephoneNo");
+ String wa = resultSet.getString("working_area");
+                String tData[] = {id, fname,lname, email, fAd, fNo,wa};
+                DefaultTableModel tbm1 = (DefaultTableModel) empTable.getModel();
+                tbm1.addRow(tData);
+       
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Enter Keyword");
+                   
+            }
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        }
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -574,6 +665,6 @@ public class Employee extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField keyword;
     // End of variables declaration//GEN-END:variables
 }

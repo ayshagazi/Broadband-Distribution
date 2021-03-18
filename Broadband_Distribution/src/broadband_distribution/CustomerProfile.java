@@ -40,64 +40,39 @@ public class CustomerProfile extends javax.swing.JFrame {
                     "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
 
             Statement statement = connection.createStatement();
-              String sql = "SELECT * FROM customer    WHERE customerID= "+ Integer.parseInt(customerId)+";";
-
-         //   String sql;
-          // sql = "SELECT bill.billId, customer.customerId, customer.cName, customer.cEmail, customer.cAdress, bill.amount,bill.status,bill.deadline, customer.cPhoneNo, From bill INNER JOIN customer ON bill.customerId=customer.customerId WHERE customerId= " + Integer.parseInt(customerId) + ";";
-            //String sql= "SELECT bill.billId, customer.customerId, customer.cName, bill.amount, bill.status,customer.cPhoneNo From bill INNER JOIN customer ON bill.customerId=customer.customerId ";
-
-           //  String sql = "DELETE FROM customer WHERE customerId = " + Integer.parseInt(customerId) + ";";
+            String sql = "SELECT * FROM customer    WHERE customerID= "+ Integer.parseInt(customerId)+";";
+            
+            
+        
             ResultSet resultSet = statement
                     .executeQuery(sql);
 
             while (resultSet.next()) {
-    String billId = resultSet.getString("billId");
+
                 String iD = resultSet.getString("customerId");
                 String fname = resultSet.getString("cName");
                 String femail = resultSet.getString("cEmail");
 
                 String fAd = resultSet.getString("cAdress");
-               
-            
-
-                String amount = resultSet.getString("amount");
-
-                String status = resultSet.getString("status");
-
-                String deadline = resultSet.getString("deadline");
-
-                String complain = resultSet.getString("billId");
-
-               // String billId = resultSet.getString("billId");
-               
-                 String fNo = resultSet.getString("cPhoneNo");
-               
-                bill.setText(billId); 
+                String fNo = resultSet.getString("cPhoneNo");
+                
                 id.setText(iD);
                 name.setText(fname);
-
+                
                 email.setText(femail);
                 address.setText(fAd);
-               // pckge.setText(iD);
-          
-               amt.setText(amount);
-               stat.setText(status);
-               dline.setText(deadline);
-               comp.setText(complain);
-               
-                
-                
                 contact.setText(fNo);
-              
+                
 
-                // String tData[] = {id, fname, femail, fAd, fNo};
-                //  DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
-                //  tbm1.addRow(tData);
+               // String tData[] = {id, fname, femail, fAd, fNo};
+              //  DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
+              //  tbm1.addRow(tData);
+
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }    
 
     }
 
@@ -279,15 +254,17 @@ public class CustomerProfile extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(address, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
@@ -426,6 +403,11 @@ public class CustomerProfile extends javax.swing.JFrame {
         comp.setBackground(new java.awt.Color(228, 228, 228));
         comp.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         comp.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        comp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                compActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -524,6 +506,10 @@ public class CustomerProfile extends javax.swing.JFrame {
     private void dlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dlineActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_dlineActionPerformed
+
+    private void compActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_compActionPerformed
 
     /**
      * @param args the command line arguments
