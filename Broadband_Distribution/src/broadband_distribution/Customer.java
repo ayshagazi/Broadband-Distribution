@@ -332,7 +332,7 @@ public class Customer extends javax.swing.JFrame {
                         "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
 
                 if (name.equals("")) {
-                    JOptionPane.showMessageDialog(this, "Eniter Name");
+                    JOptionPane.showMessageDialog(this, "Enter Name");
 
                 } else {
 
@@ -361,7 +361,7 @@ public class Customer extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Table Empty");
 
             } else {
-                JOptionPane.showMessageDialog(this, "Please select a roe for delete. ");
+                JOptionPane.showMessageDialog(this, "Please select a row for delete. ");
             }
 
         }
@@ -454,6 +454,7 @@ public class Customer extends javax.swing.JFrame {
                 PreparedStatement prepare = connection.prepareStatement(sql);
 
                 prepare.executeUpdate();
+                
                 DefaultTableModel tbm = (DefaultTableModel) csTable.getModel();
                 tbm.setRowCount(0);
                 //  show user();
@@ -482,8 +483,8 @@ public class Customer extends javax.swing.JFrame {
     }//GEN-LAST:event_contactNoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
- String tname = "", temail = "", taddress = "", customerId = "";
+   
+       String tname = "", temail = "", taddress = "", customerId = "";
         int tNo;
         DefaultTableModel defaultTableModel = (DefaultTableModel) csTable.getModel();
 
@@ -497,22 +498,12 @@ public class Customer extends javax.swing.JFrame {
 
             int row = csTable.getSelectedRow();
             customerId = defaultTableModel.getValueAt(row, 0).toString();
-      new  CustomerProfile(customerId).setVisible(true);
-          //  CustomerProfile cp= new CustomerProfile(customerId.getText());
-        
+            new  CustomerProfile(customerId).setVisible(true);
 
 
-        // TODO add your handling code here:
-         try {
-             dispose();
-                CustomerProfile frame = new CustomerProfile();
-                frame.show();
-               // frame.setVisible(true);
-                
-            } catch (Exception e) {
-                e.printStackTrace();
+
+           
             }
-        }    
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

@@ -305,6 +305,10 @@ public class emp_update extends javax.swing.JFrame {
  DefaultTableModel tbm = (DefaultTableModel) delTable.getModel();
                 tbm.setRowCount(0);
                     JOptionPane.showMessageDialog(this, "Deleted Successfully");
+                    
+                     dispose();
+                emp_update m= new emp_update();
+                m.show();
 
                 
                 connection.close();

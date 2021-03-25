@@ -258,7 +258,7 @@ public class Login extends javax.swing.JFrame {
             if (resultSet.next()) {
                 
                 dispose();
-                HomePage m=new HomePage();
+                home_mp m=new home_mp();
                 m.show();
                 
             }

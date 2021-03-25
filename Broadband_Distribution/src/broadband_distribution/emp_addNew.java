@@ -292,6 +292,10 @@ public class emp_addNew extends javax.swing.JFrame {
                 //  show user();
 
                 JOptionPane.showMessageDialog(this, "Added successfully.");
+                
+                dispose();
+                Employee m= new Employee();
+                m.show();
 
             //}
             connection.close();
