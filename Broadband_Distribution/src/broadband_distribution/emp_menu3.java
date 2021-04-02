@@ -26,6 +26,7 @@ public class emp_menu3 extends javax.swing.JInternalFrame {
     /**
      * Creates new form emp_menu3
      */
+  
     public emp_menu3() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0,0));
@@ -40,7 +41,7 @@ public class emp_menu3 extends javax.swing.JInternalFrame {
                     "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
 
             Statement statement = connection.createStatement();
-            String sql = "SELECT employee.employeeId, employee.eFame,employee.eLastName,employee.eEmail, employee.eEmail,employee.eAdress, employee.ephoneNo,employee.working_area, salary.rank, salary.amount From employee INNER JOIN salary on employee.employeeId= salary.employeeId";
+            String sql = "SELECT employee.employeeId, employee.eFame,employee.eLastName,employee.eEmail, employee.eEmail,employee.eAdress, employee.ephoneNo,employee.working_area, salary.position, salary.amount From employee FULL JOIN salary on employee.employeeId= salary.employeeId";
 
             //  String sql= "SELECT bill.billId, customer.customerId, customer.cName, bill.amount, bill.status,customer.cPhoneNo From bill INNER JOIN customer ON bill.customerId=customer.customerId ";
             ResultSet resultSet = statement
@@ -57,7 +58,7 @@ public class emp_menu3 extends javax.swing.JInternalFrame {
                 String fNo = resultSet.getString("ephoneNo");
                 String wa = resultSet.getString("working_area");
 
-                String des = resultSet.getString("rank");
+                String des = resultSet.getString("position");
                 String sal = resultSet.getString("amount");
                 String tData[] = {id, fname, lname, email, fAd, fNo, wa, des, sal};
                 DefaultTableModel tbm1 = (DefaultTableModel) delTable.getModel();
@@ -83,7 +84,7 @@ public class emp_menu3 extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         mail = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
+        dline = new javax.swing.JTextField();
         pos = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         sal = new javax.swing.JTextField();
@@ -129,6 +130,11 @@ public class emp_menu3 extends javax.swing.JInternalFrame {
         jButton4.setBackground(new java.awt.Color(153, 153, 153));
         jButton4.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jButton4.setText("SREACH");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         mail.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         mail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -141,8 +147,8 @@ public class emp_menu3 extends javax.swing.JInternalFrame {
             }
         });
 
-        jTextField1.setBorder(null);
-        jTextField1.setOpaque(false);
+        dline.setBorder(null);
+        dline.setOpaque(false);
 
         pos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         pos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -186,6 +192,11 @@ public class emp_menu3 extends javax.swing.JInternalFrame {
         jButton6.setBackground(new java.awt.Color(0, 203, 133));
         jButton6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton6.setText("UPDATE");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton8.setBackground(new java.awt.Color(0, 203, 133));
         jButton8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -361,14 +372,14 @@ public class emp_menu3 extends javax.swing.JInternalFrame {
                                         .addGap(36, 36, 36)
                                         .addComponent(jLabel9)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(dline, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(30, 30, 30)
                                         .addComponent(jButton4))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
                                 .addComponent(pos, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 64, Short.MAX_VALUE)))
+                        .addGap(0, 41, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(145, 145, 145)
@@ -392,7 +403,7 @@ public class emp_menu3 extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dline, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -422,28 +433,47 @@ public class emp_menu3 extends javax.swing.JInternalFrame {
                     .addComponent(jLabel11)
                     .addComponent(sal, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+      private void clear(){
+      id.setText("");
+        nameF.setText("");
+        nameL.setText("");
+        mail.setText("");
+        addres.setText("");
+        phnNo.setText("");
+        area.setText("");
+        pos.setText("");
+        sal.setText("");
+    
+         
+}
+    
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         
-        
-        try {
+          DefaultTableModel tbm = (DefaultTableModel) delTable.getModel();
+                tbm.setRowCount(0);
+          try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection connection = DriverManager.getConnection(
                     "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
 
             Statement statement = connection.createStatement();
-            String sql = "SELECT employee.employeeId, employee.eFame,employee.eLastName,employee.eEmail, employee.eEmail,employee.eAdress, employee.ephoneNo,employee.working_area, salary.rank, salary.amount From employee INNER JOIN salary on employee.employeeId= salary.employeeId";
+            String sql = "SELECT employee.employeeId, employee.eFame,employee.eLastName,employee.eEmail, employee.eEmail,employee.eAdress, employee.ephoneNo,employee.working_area, salary.position, salary.amount From employee FULL JOIN salary on employee.employeeId= salary.employeeId";
 
             //  String sql= "SELECT bill.billId, customer.customerId, customer.cName, bill.amount, bill.status,customer.cPhoneNo From bill INNER JOIN customer ON bill.customerId=customer.customerId ";
             ResultSet resultSet = statement
@@ -460,17 +490,22 @@ public class emp_menu3 extends javax.swing.JInternalFrame {
                 String fNo = resultSet.getString("ephoneNo");
                 String wa = resultSet.getString("working_area");
 
-                String des = resultSet.getString("rank");
+                String des = resultSet.getString("position");
                 String sal = resultSet.getString("amount");
                 String tData[] = {id, fname, lname, email, fAd, fNo, wa, des, sal};
                 DefaultTableModel tbm1 = (DefaultTableModel) delTable.getModel();
                 tbm1.addRow(tData);
+                    
 
             }
+            
+            JOptionPane.showMessageDialog(this, "Refresh Successfully");
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -675,10 +710,7 @@ public class emp_menu3 extends javax.swing.JInternalFrame {
             wa=area.getText();
             rank= pos.getText();
              s = Integer.parseInt(sal.getText());
-           //   Float sa= Float.parseFloat(s);
-     //   DecimalFormat df= new DecimalFormat("0.00");
-     //   df.setMaximumFractionDigits(2);
-     //   s= df.format(sa);
+           
 
             int row = delTable.getSelectedRow();
             customerId = defaultTableModel.getValueAt(row, 0).toString();
@@ -688,27 +720,28 @@ public class emp_menu3 extends javax.swing.JInternalFrame {
                 Connection connection = DriverManager.getConnection(
                         "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
 
+                 
+                    String sql3 = "DELETE FROM schedule WHERE employeeId = " + Integer.parseInt(customerId) + ";";
+            PreparedStatement prepare3 = connection.prepareStatement(sql3);
+
+                    prepare3.executeUpdate();
+                
                     Statement statement = connection.createStatement();
             String sql = "DELETE FROM salary WHERE employeeId = " + Integer.parseInt(customerId) + ";";
-                    //String sql = "DELETE FROM employee WHERE employeeId = " + Integer.parseInt(customerId) + ";";
-                  
-              //   String sql = "DELETE FROM employee WHERE employeeId =(SELECT amount,rank from salary WHERE employeeId = " + Integer.parseInt(customerId) + " );";
-
-            //   String sql = "Delete  FROM employee INNER JOIN salary on employee.employeeId= salary.employeeId WHERE employeeId = " + Integer.parseInt(customerId) + ";";
-
+                   
                
-              //  String sql = "DELETE FROM employee WHERE EXISTS(SELECT * FROM salary where salary.employeeId= employee.employeeId AND  salary.employeeId = " + Integer.parseInt(customerId) + ");";
-    //   String sql = "DELETE FROM employee WHERE EXISTS(SELECT * FROM salary where salary.employeeId= employee.employeeId) where employeeId =" + Integer.parseInt(customerId) + ";";
-
-                
                     PreparedStatement prepare = connection.prepareStatement(sql);
 
                     prepare.executeUpdate();
+                   
                     
                      String sql2 = "DELETE FROM employee WHERE employeeId = " + Integer.parseInt(customerId) + ";";
-            PreparedStatement prepare1 = connection.prepareStatement(sql);
+            PreparedStatement prepare1 = connection.prepareStatement(sql2);
 
                     prepare1.executeUpdate();
+                    
+                    
+                     
  DefaultTableModel tbm = (DefaultTableModel) delTable.getModel();
                 tbm.setRowCount(0);
                     JOptionPane.showMessageDialog(this, "Deleted Successfully");
@@ -717,6 +750,7 @@ public class emp_menu3 extends javax.swing.JInternalFrame {
 
                 
                 connection.close();
+                clear();
             } catch (SQLException ex) {
                 Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -734,11 +768,161 @@ public class emp_menu3 extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton8ActionPerformed
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+         String Fname = "", Lname = "",email="",area1="",rank="", taddress = "", customerId = "";
+        int tNo,salary;
+        String id;
+        DefaultTableModel defaultTableModel = (DefaultTableModel) delTable.getModel();
+
+        if (delTable.getSelectedRowCount() == 1) {
+            //   System.out.println("at update");
+
+            Fname = nameF.getText();
+            Lname = nameL.getText();
+            email = mail.getText();
+             area1 = area.getText(); 
+             tNo = Integer.parseInt(phnNo.getText());
+              rank = pos.getText();
+             
+            taddress = addres.getText();
+            salary = Integer.parseInt(sal.getText());
+
+            int row = delTable.getSelectedRow();
+            customerId = defaultTableModel.getValueAt(row, 0).toString();
+            
+
+            try {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection connection = DriverManager.getConnection(
+                        "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+  Statement statement = connection.createStatement();
+                String sql = "UPDATE employee SET eFame='" + Fname + "',elastName='" + Lname + "', eEmail='" + email + "',eAdress='" + taddress + "',ephoneNo=" + tNo + ",working_area='"+area1+"' where employeeId = " + Integer.parseInt(customerId) + ";";
+
+                PreparedStatement prepare = connection.prepareStatement(sql);
+
+                prepare.executeUpdate();
+                
+  ResultSet resultSet1 = statement.executeQuery("Select employeeId from employee where ephoneNo= ('" + tNo + "');" );
+ if (resultSet1.next()) {
+                           
+                      id = resultSet1.getString("employeeId");
+      
+ 
+    String sql2 = "UPDATE salary SET amount='" + salary + "',position='" + rank + "' where employeeId = " + Integer.parseInt(id) + ";";
+                      PreparedStatement prepare2 = connection.prepareStatement(sql2);
+                            prepare2.executeUpdate();
+                 // }
+                       }
+               
+                DefaultTableModel tbm = (DefaultTableModel) delTable.getModel();
+                tbm.setRowCount(0);
+                JOptionPane.showMessageDialog(this, "Successfully Updated.");
+                
+                connection.close();
+                clear();
+            } catch (SQLException ex) {
+                Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        
+          DefaultTableModel tbm = (DefaultTableModel) delTable.getModel();
+                tbm.setRowCount(0);
+       
+          
+  
+       
+          
+                
+          String value= jComboBox1.getSelectedItem().toString();
+        if(value.equals("NAME")){
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+ String dead= dline.getText();
+            Statement statement = connection.createStatement();
+            String sql = "SELECT employee.employeeId, employee.eFame,employee.eLastName,employee.eEmail, employee.eEmail,employee.eAdress, employee.ephoneNo,employee.working_area, salary.position, salary.amount From employee INNER JOIN salary on (employee.employeeId= salary.employeeId) where employee.eFame like '%"+ dead +"%' ";
+
+            //  String sql= "SELECT bill.billId, customer.customerId, customer.cName, bill.amount, bill.status,customer.cPhoneNo From bill INNER JOIN customer ON bill.customerId=customer.customerId ";
+            ResultSet resultSet = statement
+                    .executeQuery(sql);
+
+            while (resultSet.next()) {
+
+                String id = resultSet.getString("employeeId");
+                String fname = resultSet.getString("eFame");
+                String lname = resultSet.getString("elastName");
+
+                String email = resultSet.getString("eEmail");
+                String fAd = resultSet.getString("eAdress");
+                String fNo = resultSet.getString("ephoneNo");
+                String wa = resultSet.getString("working_area");
+
+                String des = resultSet.getString("position");
+                String sal = resultSet.getString("amount");
+                String tData[] = {id, fname, lname, email, fAd, fNo, wa, des, sal};
+                DefaultTableModel tbm1 = (DefaultTableModel) delTable.getModel();
+                tbm1.addRow(tData);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        }
+        
+        else if(value.equals("ID")){
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+ String dead= dline.getText();
+            Statement statement = connection.createStatement();
+            String sql = "SELECT employee.employeeId, employee.eFame,employee.eLastName,employee.eEmail, employee.eEmail,employee.eAdress, employee.ephoneNo,employee.working_area, salary.position, salary.amount From employee INNER JOIN salary on (employee.employeeId= salary.employeeId) where employee.employeeId like '%"+ Integer.parseInt(dead) +"%' ";
+
+            //  String sql= "SELECT bill.billId, customer.customerId, customer.cName, bill.amount, bill.status,customer.cPhoneNo From bill INNER JOIN customer ON bill.customerId=customer.customerId ";
+            ResultSet resultSet = statement
+                    .executeQuery(sql);
+
+            while (resultSet.next()) {
+
+                String id = resultSet.getString("employeeId");
+                String fname = resultSet.getString("eFame");
+                String lname = resultSet.getString("elastName");
+
+                String email = resultSet.getString("eEmail");
+                String fAd = resultSet.getString("eAdress");
+                String fNo = resultSet.getString("ephoneNo");
+                String wa = resultSet.getString("working_area");
+
+                String des = resultSet.getString("position");
+                String sal = resultSet.getString("amount");
+                String tData[] = {id, fname, lname, email, fAd, fNo, wa, des, sal};
+                DefaultTableModel tbm1 = (DefaultTableModel) delTable.getModel();
+                tbm1.addRow(tData);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        }      
+                
+                
+  
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField addres;
     private javax.swing.JTextField area;
     private javax.swing.JTable delTable;
+    private javax.swing.JTextField dline;
     private javax.swing.JTextField id;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -758,7 +942,6 @@ public class emp_menu3 extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField mail;
     private javax.swing.JTextField nameF;
     private javax.swing.JTextField nameL;

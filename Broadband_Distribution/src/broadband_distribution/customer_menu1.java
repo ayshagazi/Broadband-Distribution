@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
@@ -35,6 +36,8 @@ public class customer_menu1 extends javax.swing.JInternalFrame {
 
             Statement statement = connection.createStatement();
             String sql = "SELECT * FROM customer";
+            // String sql= "SELECT  customer.customerId, customer.cName, customer.cEmail, customer.cAdress,customer.cPhoneNo From bill INNER JOIN customer ON bill.customerId=customer.customerId ";
+    
             ResultSet resultSet = statement
                     .executeQuery(sql);
 
@@ -46,9 +49,10 @@ public class customer_menu1 extends javax.swing.JInternalFrame {
 
                 String fAd = resultSet.getString("cAdress");
                 String fNo = resultSet.getString("cPhoneNo");
+                String p  = resultSet.getString("packageN");
 
-                String tData[] = {id, fname, femail, fAd, fNo};
-                DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
+                String tData[] = {id, fname, femail, fAd, fNo,p};
+                DefaultTableModel tbm1 = (DefaultTableModel) csTable1.getModel();
                 tbm1.addRow(tData);
 
             }
@@ -72,13 +76,11 @@ public class customer_menu1 extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        csTable = new javax.swing.JTable();
+        csTable1 = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        dline = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
-        jButton6 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(null);
@@ -96,9 +98,14 @@ public class customer_menu1 extends javax.swing.JInternalFrame {
         jButton4.setBackground(new java.awt.Color(153, 153, 153));
         jButton4.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jButton4.setText("SREACH");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
-        csTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        csTable.setModel(new javax.swing.table.DefaultTableModel(
+        csTable1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        csTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -106,33 +113,25 @@ public class customer_menu1 extends javax.swing.JInternalFrame {
                 "ID", "NAME", "ADDRESS", "PHONE NO", "EMAIL", "PAKAGE NO"
             }
         ));
-        jScrollPane1.setViewportView(csTable);
+        jScrollPane1.setViewportView(csTable1);
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel5.setText("SERACH BY :");
 
-        jTextField3.setBorder(null);
-        jTextField3.setOpaque(false);
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        dline.setBorder(null);
+        dline.setOpaque(false);
+        dline.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                dlineActionPerformed(evt);
             }
         });
-
-        jButton6.setBackground(new java.awt.Color(0, 203, 133));
-        jButton6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton6.setText("UPDATE");
 
         jButton8.setBackground(new java.awt.Color(0, 203, 133));
         jButton8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton8.setText("Go To PROFILE");
-
-        jButton3.setBackground(new java.awt.Color(0, 203, 133));
-        jButton3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton3.setText("REFRESH");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButton8ActionPerformed(evt);
             }
         });
 
@@ -142,13 +141,9 @@ public class customer_menu1 extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(87, 87, 87)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(114, 114, 114)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 538, Short.MAX_VALUE)
                 .addComponent(jButton8)
-                .addGap(90, 90, 90)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 80, Short.MAX_VALUE))
+                .addGap(27, 27, 27))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -162,7 +157,7 @@ public class customer_menu1 extends javax.swing.JInternalFrame {
                             .addComponent(jLabel6)
                             .addGap(7, 7, 7)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(dline, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(20, 20, 20)
                             .addComponent(jButton4))
@@ -171,20 +166,17 @@ public class customer_menu1 extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(390, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 2, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dline, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(10, 10, 10)
                             .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
@@ -202,21 +194,130 @@ public class customer_menu1 extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void dlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dlineActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_dlineActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
+        
+       String tname = "", temail = "", taddress = "", customerId1 = "";
+        int tNo;
+        DefaultTableModel defaultTableModel = (DefaultTableModel) csTable1.getModel();
 
-    }//GEN-LAST:event_jButton3ActionPerformed
+        if (csTable1.getSelectedRowCount() == 1) {
+            //   System.out.println("at update");
+
+            //tname = name.getText();
+          //  temail = email.getText();
+        //    taddress = address.getText();
+          //  tNo = Integer.parseInt(contactNo.getText());
+
+            int row = csTable1.getSelectedRow();
+            customerId1 = defaultTableModel.getValueAt(row, 0).toString();
+            new  CustomerProfile(customerId1).setVisible(true);
+
+
+
+           
+            }
+        
+        
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+         DefaultTableModel tbm = (DefaultTableModel) csTable1.getModel();
+                tbm.setRowCount(0);
+        String value = jComboBox1.getSelectedItem().toString();
+        if (value.equals("NAME")) {
+            try {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection connection = DriverManager.getConnection(
+                        "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+
+                String dead = dline.getText();
+                // String size= jTextField2.getText();
+
+                Statement statement = connection.createStatement();
+
+                //String Client_Name = null;
+                //String Email = null;
+                //String sql="SELECT cName,cPhoneNo FROM customer WHERE customerId = '"+ Integer.parseInt(dead) +"'";
+                // String sql= "SELECT customer.cName, bill.amount,bill.deadline, bill.status,customer.cPhoneNo From bill INNER JOIN customer ON bill.customerId=customer.customerId  WHERE customerId = '"+ Integer.parseInt(dead) +"'";
+                //    ResultSet resultSet = statement.executeQuery
+                ResultSet resultSet = statement.executeQuery("SELECT  * From customer  where customer.cName like '%" + dead + "%' ");
+                if (resultSet.next()) {
+
+                     String id = resultSet.getString("customerId");
+                String fname = resultSet.getString("cName");
+                String femail = resultSet.getString("cEmail");
+
+                String fAd = resultSet.getString("cAdress");
+                String fNo = resultSet.getString("cPhoneNo");
+                String p  = resultSet.getString("packageN");
+
+                    String tData[] = {id,fname,femail,fAd,fNo,p};
+                    DefaultTableModel tbm1 = (DefaultTableModel) csTable1.getModel();
+                    tbm1.addRow(tData);
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Enter Keyword");
+
+                }
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (value.equals("ID")) {
+            try {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection connection = DriverManager.getConnection(
+                        "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+
+                String dead = dline.getText();
+                // String size= jTextField2.getText();
+
+                Statement statement = connection.createStatement();
+
+                //String Client_Name = null;
+                //String Email = null;
+                //String sql="SELECT cName,cPhoneNo FROM customer WHERE customerId = '"+ Integer.parseInt(dead) +"'";
+                // String sql= "SELECT customer.cName, bill.amount,bill.deadline, bill.status,customer.cPhoneNo From bill INNER JOIN customer ON bill.customerId=customer.customerId  WHERE customerId = '"+ Integer.parseInt(dead) +"'";
+                //    ResultSet resultSet = statement.executeQuery
+                ResultSet resultSet = statement.executeQuery(" SELECT  * From customer  where customer.customerId like '" + Integer.parseInt(dead) + "'");
+                if (resultSet.next()) {
+
+                       String id = resultSet.getString("customerId");
+                String fname = resultSet.getString("cName");
+                String femail = resultSet.getString("cEmail");
+
+                String fAd = resultSet.getString("cAdress");
+                String fNo = resultSet.getString("cPhoneNo");
+                String p  = resultSet.getString("packageN");
+
+                    String tData[] = {id,fname,femail,fAd,fNo,p};
+
+                    
+                    DefaultTableModel tbm1 = (DefaultTableModel) csTable1.getModel();
+                    tbm1.addRow(tData);
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Enter Keyword");
+
+                }
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    }            
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable csTable;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JTable csTable1;
+    private javax.swing.JTextField dline;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton8;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel5;
@@ -224,6 +325,5 @@ public class customer_menu1 extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }

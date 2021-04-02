@@ -6,11 +6,13 @@
 package broadband_distribution;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -198,7 +200,7 @@ public class emp_menu2 extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
- String nameF = fName.getText();
+        String nameF = fName.getText();
            String nameL= lName.getText();
         String taddress = address.getText();
          String tNo = phn.getText();
@@ -208,6 +210,18 @@ public class emp_menu2 extends javax.swing.JInternalFrame {
       //  String t= time.getText();
         String p= pos.getText();
         String s= salary.getText();
+        
+        String stat="Due";
+        
+        String tt="10am-6pm";
+        String y= "40";
+          
+      java.sql.Date todaysDate = new java.sql.Date(new java.util.Date().getTime());
+      int futureDay =31;
+       // int pastDay=2;
+
+        java.sql.Date futureDate = this.addDays(todaysDate, futureDay);
+      
         
      //   Float sa= Float.parseFloat(s);
       //  DecimalFormat df= new DecimalFormat("0.00");
@@ -239,9 +253,14 @@ public class emp_menu2 extends javax.swing.JInternalFrame {
                            
                          String id = resultSet.getString("employeeId");
                          
-                    String sql2 = "INSERT INTO salary VALUES ('" + Integer.parseInt(id) + "','" +Integer.parseInt(s)+ "','" +p +"')";
+                    String sql2 = "INSERT INTO salary VALUES ('" + Integer.parseInt(id) + "','" +Integer.parseInt(s)+ "','" +p +"','"+stat+"','"+futureDate+"')";
                       PreparedStatement prepare2 = connection.prepareStatement(sql2);
                             prepare2.executeUpdate();
+                            
+                            
+                             String sql3 = "INSERT INTO schedule VALUES ('" + Integer.parseInt(id) + "','" +tt +"','"+Integer.parseInt(y)+"')";
+                      PreparedStatement prepare3 = connection.prepareStatement(sql3);
+                            prepare3.executeUpdate();
                  
                        }
                 
@@ -255,6 +274,8 @@ public class emp_menu2 extends javax.swing.JInternalFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+ 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void fNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNameActionPerformed
@@ -289,4 +310,16 @@ public class emp_menu2 extends javax.swing.JInternalFrame {
     private javax.swing.JTextField pos;
     private javax.swing.JTextField salary;
     // End of variables declaration//GEN-END:variables
+private Date addDays(Date date, int days) {
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //public static Date addDays(Date date, int days) {
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(date);
+        c1.add(Calendar.DATE, days);
+        return new Date(c1.getTimeInMillis());
+  //  }
 }
+
+
+}
+

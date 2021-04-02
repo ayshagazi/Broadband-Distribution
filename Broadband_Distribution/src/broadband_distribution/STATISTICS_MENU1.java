@@ -6,7 +6,12 @@
 package broadband_distribution;
 
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,6 +27,73 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
          this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0,0));
         BasicInternalFrameUI ui=(BasicInternalFrameUI)this.getUI();
         ui.setNorthPane(null);
+        
+        
+       int a=0, b = 0, c=0;
+        String total;
+        try {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection connection = DriverManager.getConnection(
+                        "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+
+               
+
+                Statement statement = connection.createStatement();
+              
+                
+                
+                ResultSet resultSet2 = statement.executeQuery("select count(cName) as Counter from customer ");
+                while (resultSet2.next()) {
+                    String Bid = resultSet2.getString("Counter"); 
+                    a=Integer.parseInt(Bid);
+                    activeUser.setText(Bid);
+                }
+                ResultSet resultSet3 = statement.executeQuery("select count(userId) as Counter from NewUser ");
+                while (resultSet3.next()) {
+                    String Bid = resultSet3.getString("Counter"); 
+                    b=Integer.parseInt(Bid);  
+                    pendingUser.setText(Bid);
+                }
+                c=a+b;
+                total = String.valueOf(c);
+                totalUser.setText(total);
+                
+                ResultSet resultSet4 = statement.executeQuery("select count(status) as Counter from bill where status = 'paid' ");
+                while (resultSet4.next()) {
+                    String Bid = resultSet4.getString("Counter"); 
+                    billPaidUser.setText(Bid);
+                }
+                ResultSet resultSet5 = statement.executeQuery("select count(status) as Counter from bill where status = 'Unpaid' ");
+                while (resultSet5.next()) {
+                    String Bid = resultSet5.getString("Counter"); 
+                    expiredUser.setText(Bid);
+                }
+                ResultSet resultSet6 = statement.executeQuery("select count(employeeId) as Counter from employee ");
+                while (resultSet6.next()) {
+                    String Bid = resultSet6.getString("Counter"); 
+                    totalEmployee.setText(Bid);
+                }
+                ResultSet resultSet7 = statement.executeQuery("select count(employeeId) as Counter from employee ");
+                while (resultSet7.next()) {
+                    String Bid = resultSet7.getString("Counter"); 
+                    activeEmployee.setText(Bid);
+                }
+                ResultSet resultSet8 = statement.executeQuery("select count(status) as Counter from salary where status = 'paid' ");
+                while (resultSet8.next()) {
+                    String Bid = resultSet8.getString("Counter"); 
+                    paidEmployee.setText(Bid);
+                }
+                ResultSet resultSet9 = statement.executeQuery("select count(status) as Counter from salary where status = 'Due' ");
+                while (resultSet9.next()) {
+                    String Bid = resultSet9.getString("Counter"); 
+                    unpaidEmployee.setText(Bid);
+                }
+                
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        
     }
 
     /**
@@ -39,51 +111,51 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        paidEmployee = new javax.swing.JTextField();
         jLabel55 = new javax.swing.JLabel();
         jLabel56 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        totalUser = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        activeUser = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        pendingUser = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jLabel39 = new javax.swing.JLabel();
         jLabel40 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        billPaidUser = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jLabel42 = new javax.swing.JLabel();
         jLabel43 = new javax.swing.JLabel();
         jLabel44 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        unpaidEmployee = new javax.swing.JTextField();
         jLabel57 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel45 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
         jLabel47 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        activeEmployee = new javax.swing.JTextField();
         jLabel54 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jLabel48 = new javax.swing.JLabel();
         jLabel49 = new javax.swing.JLabel();
         jLabel50 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        expiredUser = new javax.swing.JTextField();
         jPanel11 = new javax.swing.JPanel();
         jLabel51 = new javax.swing.JLabel();
         jLabel52 = new javax.swing.JLabel();
         jLabel53 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        totalEmployee = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -118,9 +190,9 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel29.setText("EMPLOYEE SALARY");
 
-        jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(29, 29, 53));
-        jTextField1.setForeground(new java.awt.Color(130, 133, 152));
+        paidEmployee.setEditable(false);
+        paidEmployee.setBackground(new java.awt.Color(29, 29, 53));
+        paidEmployee.setForeground(new java.awt.Color(130, 133, 152));
 
         jLabel55.setBackground(new java.awt.Color(0, 3, 29));
         jLabel55.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -141,12 +213,12 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                        .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel27)
                         .addGap(14, 14, 14))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jTextField1)
+                        .addComponent(paidEmployee)
                         .addContainerGap())))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
@@ -172,7 +244,7 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
                     .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel27))
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(paidEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
@@ -209,9 +281,9 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel32.setText("TOTAL USER");
 
-        jTextField2.setEditable(false);
-        jTextField2.setBackground(new java.awt.Color(29, 29, 53));
-        jTextField2.setForeground(new java.awt.Color(130, 133, 152));
+        totalUser.setEditable(false);
+        totalUser.setBackground(new java.awt.Color(29, 29, 53));
+        totalUser.setForeground(new java.awt.Color(130, 133, 152));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -226,7 +298,7 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
                         .addComponent(jLabel30)
                         .addGap(14, 14, 14))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jTextField2)
+                        .addComponent(totalUser)
                         .addContainerGap())))
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
@@ -242,7 +314,7 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
                     .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel30))
                 .addGap(18, 18, 18)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(totalUser, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
@@ -269,9 +341,9 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel35.setText("ACTIVE USER");
 
-        jTextField3.setEditable(false);
-        jTextField3.setBackground(new java.awt.Color(29, 29, 53));
-        jTextField3.setForeground(new java.awt.Color(130, 133, 152));
+        activeUser.setEditable(false);
+        activeUser.setBackground(new java.awt.Color(29, 29, 53));
+        activeUser.setForeground(new java.awt.Color(130, 133, 152));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -286,7 +358,7 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
                         .addComponent(jLabel33)
                         .addGap(14, 14, 14))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jTextField3)
+                        .addComponent(activeUser)
                         .addContainerGap())))
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel5Layout.createSequentialGroup()
@@ -302,7 +374,7 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
                     .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel33))
                 .addGap(18, 18, 18)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(activeUser, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel5Layout.createSequentialGroup()
@@ -329,9 +401,9 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
         jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel38.setText("PENDING USER");
 
-        jTextField4.setEditable(false);
-        jTextField4.setBackground(new java.awt.Color(29, 29, 53));
-        jTextField4.setForeground(new java.awt.Color(130, 133, 152));
+        pendingUser.setEditable(false);
+        pendingUser.setBackground(new java.awt.Color(29, 29, 53));
+        pendingUser.setForeground(new java.awt.Color(130, 133, 152));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -346,7 +418,7 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
                         .addComponent(jLabel36)
                         .addGap(14, 14, 14))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jTextField4)
+                        .addComponent(pendingUser)
                         .addContainerGap())))
             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel6Layout.createSequentialGroup()
@@ -362,7 +434,7 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
                     .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel36))
                 .addGap(18, 18, 18)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pendingUser, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel6Layout.createSequentialGroup()
@@ -389,9 +461,9 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
         jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel41.setText("BILL PAID USER");
 
-        jTextField5.setEditable(false);
-        jTextField5.setBackground(new java.awt.Color(29, 29, 53));
-        jTextField5.setForeground(new java.awt.Color(130, 133, 152));
+        billPaidUser.setEditable(false);
+        billPaidUser.setBackground(new java.awt.Color(29, 29, 53));
+        billPaidUser.setForeground(new java.awt.Color(130, 133, 152));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -406,7 +478,7 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
                         .addComponent(jLabel39)
                         .addGap(14, 14, 14))
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jTextField5)
+                        .addComponent(billPaidUser)
                         .addContainerGap())))
             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel7Layout.createSequentialGroup()
@@ -422,7 +494,7 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
                     .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel39))
                 .addGap(18, 18, 18)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(billPaidUser, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel7Layout.createSequentialGroup()
@@ -449,9 +521,9 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
         jLabel44.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel44.setText("EMPLOYEE SALARY");
 
-        jTextField6.setEditable(false);
-        jTextField6.setBackground(new java.awt.Color(29, 29, 53));
-        jTextField6.setForeground(new java.awt.Color(130, 133, 152));
+        unpaidEmployee.setEditable(false);
+        unpaidEmployee.setBackground(new java.awt.Color(29, 29, 53));
+        unpaidEmployee.setForeground(new java.awt.Color(130, 133, 152));
 
         jLabel57.setBackground(new java.awt.Color(0, 3, 29));
         jLabel57.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
@@ -467,12 +539,12 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel44, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                        .addComponent(jLabel44, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel42)
                         .addGap(14, 14, 14))
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jTextField6)
+                        .addComponent(unpaidEmployee)
                         .addContainerGap())))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
@@ -493,7 +565,7 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
                     .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel42))
                 .addGap(18, 18, 18)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(unpaidEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
@@ -525,9 +597,9 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
         jLabel47.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel47.setText("ACTIVE EMPLOYEE");
 
-        jTextField7.setEditable(false);
-        jTextField7.setBackground(new java.awt.Color(29, 29, 53));
-        jTextField7.setForeground(new java.awt.Color(130, 133, 152));
+        activeEmployee.setEditable(false);
+        activeEmployee.setBackground(new java.awt.Color(29, 29, 53));
+        activeEmployee.setForeground(new java.awt.Color(130, 133, 152));
 
         jLabel54.setBackground(new java.awt.Color(0, 3, 29));
         jLabel54.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -547,7 +619,7 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
                         .addComponent(jLabel45)
                         .addGap(14, 14, 14))
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jTextField7)
+                        .addComponent(activeEmployee)
                         .addContainerGap())))
             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel9Layout.createSequentialGroup()
@@ -568,7 +640,7 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
                     .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel45))
                 .addGap(18, 18, 18)
-                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(activeEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel9Layout.createSequentialGroup()
@@ -600,9 +672,9 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
         jLabel50.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel50.setText("EXPIRED USER");
 
-        jTextField8.setEditable(false);
-        jTextField8.setBackground(new java.awt.Color(29, 29, 53));
-        jTextField8.setForeground(new java.awt.Color(130, 133, 152));
+        expiredUser.setEditable(false);
+        expiredUser.setBackground(new java.awt.Color(29, 29, 53));
+        expiredUser.setForeground(new java.awt.Color(130, 133, 152));
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -617,7 +689,7 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
                         .addComponent(jLabel48)
                         .addGap(14, 14, 14))
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jTextField8)
+                        .addComponent(expiredUser)
                         .addContainerGap())))
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel10Layout.createSequentialGroup()
@@ -633,7 +705,7 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
                     .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel48))
                 .addGap(18, 18, 18)
-                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(expiredUser, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel10Layout.createSequentialGroup()
@@ -660,9 +732,9 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
         jLabel53.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel53.setText("TOTAL EMPLOYEE");
 
-        jTextField9.setEditable(false);
-        jTextField9.setBackground(new java.awt.Color(29, 29, 53));
-        jTextField9.setForeground(new java.awt.Color(130, 133, 152));
+        totalEmployee.setEditable(false);
+        totalEmployee.setBackground(new java.awt.Color(29, 29, 53));
+        totalEmployee.setForeground(new java.awt.Color(130, 133, 152));
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -677,7 +749,7 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
                         .addComponent(jLabel51)
                         .addGap(14, 14, 14))
                     .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(jTextField9)
+                        .addComponent(totalEmployee)
                         .addContainerGap())))
             .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel11Layout.createSequentialGroup()
@@ -693,7 +765,7 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
                     .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel51))
                 .addGap(18, 18, 18)
-                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(totalEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
             .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel11Layout.createSequentialGroup()
@@ -702,7 +774,7 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
                     .addContainerGap(99, Short.MAX_VALUE)))
         );
 
-        jPanel2.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 200, 160, 120));
+        jPanel2.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 210, 160, 120));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -720,6 +792,10 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField activeEmployee;
+    private javax.swing.JTextField activeUser;
+    private javax.swing.JTextField billPaidUser;
+    private javax.swing.JTextField expiredUser;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
@@ -762,14 +838,10 @@ public class STATISTICS_MENU1 extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField paidEmployee;
+    private javax.swing.JTextField pendingUser;
+    private javax.swing.JTextField totalEmployee;
+    private javax.swing.JTextField totalUser;
+    private javax.swing.JTextField unpaidEmployee;
     // End of variables declaration//GEN-END:variables
 }

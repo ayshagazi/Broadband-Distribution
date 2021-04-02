@@ -20,41 +20,64 @@ public class CustomerProfile extends javax.swing.JFrame {
     /**
      * Creates new form CustomerProfile
      */
-    String customerId;
+    String customerId1;
 
     public CustomerProfile() {
         //  initComponents();
     }
 
-    CustomerProfile(String customerId) {
+    CustomerProfile(String customerId1) {
         // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         initComponents();
         //  jPanel2.setVisible(true);
         //  id.setText(customerId);
-        this.customerId = customerId;
+        this.customerId1 = customerId1;
         //  value= id;
 
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection connection = DriverManager.getConnection(
                     "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
-
+            
+            String p=customerId1;
+            System.out.println(p);
             Statement statement = connection.createStatement();
-            String sql = "SELECT * FROM customer    WHERE customerID= "+ Integer.parseInt(customerId)+";";
+            //  String sql = "SELECT * FROM customer    WHERE customerID= "+ Integer.parseInt(customerId)+";";
+
+            //   String sql= "SELECT bill.billId,customer.customerId, customer.cName,customer.cAdress,customer.cEmail, bill.amount, bill.status,bill.deadline,customer.cPhoneNo From bill INNER JOIN customer ON bill.customerId=customer.customerId";
+            String sql = " select c.customerId,c.cName ,"
+                    + " c.cEmail,c.cAdress,c.cPhoneNo "
+                    + ",b.billId,c.packageN, b.amount,b.status,"
+                    + "b.deadline,h.problem_description"
+                 + " from customer c inner join bill b on"
+                    + " c.customerId=b.customerId "
+                    + " inner join helpline h on h.customerId=b.customerId"
+                    + " and b.customerId = " + Integer.parseInt(p) + ";";
             
-            
-        
+         
+      //String sql= "SELECT bill.billId,customer.customerId, customer.cName,customer.cAdress,customer.cEmail,"
+     //         + "customer.packageN, bill.amount, bill.status,bill.deadline,"
+     //         + "customer.cPhoneNo From bill INNER JOIN customer ON bill.customerId=customer.customerId";
             ResultSet resultSet = statement
                     .executeQuery(sql);
-
+            
             while (resultSet.next()) {
-
+                
                 String iD = resultSet.getString("customerId");
                 String fname = resultSet.getString("cName");
                 String femail = resultSet.getString("cEmail");
-
+                
                 String fAd = resultSet.getString("cAdress");
                 String fNo = resultSet.getString("cPhoneNo");
+                String pack = resultSet.getString("packageN");
+                
+                String bil = resultSet.getString("billId");
+                // String fNo = resultSet.getString("cPhoneNo");
+                String price = resultSet.getString("amount");
+                String d = resultSet.getString("deadline");
+                String con = resultSet.getString("status");
+                
+                String problem = resultSet.getString("problem_description");
                 
                 id.setText(iD);
                 name.setText(fname);
@@ -63,16 +86,24 @@ public class CustomerProfile extends javax.swing.JFrame {
                 address.setText(fAd);
                 contact.setText(fNo);
                 
-
-               // String tData[] = {id, fname, femail, fAd, fNo};
-              //  DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
-              //  tbm1.addRow(tData);
-
+                bill.setText(bil);
+                pckge.setText(pack);
+                
+                amt.setText(price);
+                stat.setText(con);
+                dline.setText(d);
+                
+              comp.setText(problem);
+            
+             
             }
-
+           
+ 
+            connection.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }    
+        }        
+        
 
     }
 
@@ -88,6 +119,7 @@ public class CustomerProfile extends javax.swing.JFrame {
         jTextField5 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -134,18 +166,29 @@ public class CustomerProfile extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("CUSTOMER PROFILE");
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGE/back30.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 834, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-                .addGap(20, 20, 20))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
@@ -224,7 +267,7 @@ public class CustomerProfile extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
@@ -338,7 +381,7 @@ public class CustomerProfile extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
@@ -428,36 +471,37 @@ public class CustomerProfile extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(72, 72, 72)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(192, 192, 192)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(212, Short.MAX_VALUE))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(313, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel5Layout.createSequentialGroup()
-                    .addGap(437, 437, 437)
+                    .addGap(524, 524, 524)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(70, Short.MAX_VALUE)))
+                    .addContainerGap(38, Short.MAX_VALUE)))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel5Layout.createSequentialGroup()
                     .addGap(37, 37, 37)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(182, Short.MAX_VALUE)))
+                    .addContainerGap(252, Short.MAX_VALUE)))
         );
 
         getContentPane().add(jPanel5, java.awt.BorderLayout.CENTER);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
@@ -508,6 +552,17 @@ public class CustomerProfile extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_compActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+         try {
+                customer_main frame = new    customer_main();
+                frame.setVisible(true);
+                dispose();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -538,7 +593,7 @@ public class CustomerProfile extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                // new CustomerProfile().setVisible(true);
+                //new CustomerProfile().setVisible(true);
 
             }
         });
@@ -553,6 +608,7 @@ public class CustomerProfile extends javax.swing.JFrame {
     private javax.swing.JTextField dline;
     private javax.swing.JTextField email;
     private javax.swing.JTextField id;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

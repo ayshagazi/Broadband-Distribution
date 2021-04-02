@@ -94,23 +94,23 @@ public class home_mp extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(199, 199, 199)
+                .addGap(242, 242, 242)
                 .addComponent(jLabel1)
-                .addGap(29, 29, 29)
+                .addGap(38, 38, 38)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(185, Short.MAX_VALUE))
+                .addContainerGap(233, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 70));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 70));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -118,7 +118,7 @@ public class home_mp extends javax.swing.JFrame {
         pakage.setBackground(new java.awt.Color(0, 204, 255));
         pakage.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         pakage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGE/pakages30.png"))); // NOI18N
-        pakage.setText("PAKAGE");
+        pakage.setText("PACKAGE");
         pakage.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 pakageMouseEntered(evt);
@@ -132,7 +132,7 @@ public class home_mp extends javax.swing.JFrame {
                 pakageActionPerformed(evt);
             }
         });
-        jPanel3.add(pakage, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 40, 170, 100));
+        jPanel3.add(pakage, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 50, 170, 100));
 
         about.setBackground(new java.awt.Color(0, 204, 255));
         about.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -151,7 +151,7 @@ public class home_mp extends javax.swing.JFrame {
                 aboutActionPerformed(evt);
             }
         });
-        jPanel3.add(about, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 220, 170, 100));
+        jPanel3.add(about, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 220, 170, 100));
 
         add_new.setBackground(new java.awt.Color(0, 204, 255));
         add_new.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -170,7 +170,7 @@ public class home_mp extends javax.swing.JFrame {
                 add_newActionPerformed(evt);
             }
         });
-        jPanel3.add(add_new, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 40, 170, 100));
+        jPanel3.add(add_new, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, 170, 100));
 
         customer.setBackground(new java.awt.Color(0, 204, 255));
         customer.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -189,7 +189,7 @@ public class home_mp extends javax.swing.JFrame {
                 customerActionPerformed(evt);
             }
         });
-        jPanel3.add(customer, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 170, 100));
+        jPanel3.add(customer, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 170, 100));
 
         employee.setBackground(new java.awt.Color(0, 204, 255));
         employee.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -227,26 +227,26 @@ public class home_mp extends javax.swing.JFrame {
                 statActionPerformed(evt);
             }
         });
-        jPanel3.add(stat, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, -1, 100));
+        jPanel3.add(stat, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 220, -1, 100));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 800, 370));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 900, 390));
 
         P3.setBackground(new java.awt.Color(0, 3, 29));
 
         jLabel14.setBackground(new java.awt.Color(0, 3, 29));
         jLabel14.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(130, 133, 152));
-        jLabel14.setText("PAKAGE NAME,");
+        jLabel14.setText("PACKAGE NAME,");
 
         jLabel15.setBackground(new java.awt.Color(0, 3, 29));
         jLabel15.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(130, 133, 152));
-        jLabel15.setText("PAKAGE PRICE");
+        jLabel15.setText("PACKAGE PRICE");
 
         jLabel16.setBackground(new java.awt.Color(0, 3, 29));
         jLabel16.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(130, 133, 152));
-        jLabel16.setText("PAKAGE AVAILABILITY");
+        jLabel16.setText("PACKAGE AVAILABILITY");
 
         javax.swing.GroupLayout P3Layout = new javax.swing.GroupLayout(P3);
         P3.setLayout(P3Layout);
@@ -258,7 +258,7 @@ public class home_mp extends javax.swing.JFrame {
                     .addComponent(jLabel14)
                     .addComponent(jLabel15)
                     .addComponent(jLabel16))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         P3Layout.setVerticalGroup(
             P3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,7 +272,7 @@ public class home_mp extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(P3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 70, 170, 80));
+        jPanel1.add(P3, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 70, 170, 80));
 
         P4.setBackground(new java.awt.Color(0, 3, 29));
 
@@ -315,7 +315,7 @@ public class home_mp extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(P4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 170, 80));
+        jPanel1.add(P4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 540, 170, 80));
 
         P2.setBackground(new java.awt.Color(0, 3, 29));
 
@@ -350,7 +350,7 @@ public class home_mp extends javax.swing.JFrame {
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
-        jPanel1.add(P2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 170, 80));
+        jPanel1.add(P2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 70, 180, 80));
 
         P5.setBackground(new java.awt.Color(0, 3, 29));
 
@@ -403,7 +403,7 @@ public class home_mp extends javax.swing.JFrame {
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
-        jPanel1.add(P5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 520, 170, 80));
+        jPanel1.add(P5, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 540, 180, 80));
 
         P6.setBackground(new java.awt.Color(0, 3, 29));
 
@@ -463,7 +463,7 @@ public class home_mp extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        jPanel1.add(P6, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 520, 170, 80));
+        jPanel1.add(P6, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 540, 170, 80));
 
         P1.setBackground(new java.awt.Color(0, 3, 29));
 
@@ -512,7 +512,7 @@ public class home_mp extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -520,6 +520,7 @@ public class home_mp extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void customerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerMouseEntered
@@ -597,14 +598,14 @@ about.setBackground(DefaulColor);        // TODO add your handling code here:
 
     private void pakageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pakageActionPerformed
         // TODO add your handling code here:
-        try {
-                offeres frame = new   offeres();
+          
+           try {
+                pakages frame = new    pakages();
                 frame.setVisible(true);
                 dispose();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        
     }//GEN-LAST:event_pakageActionPerformed
 
     private void customerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerActionPerformed

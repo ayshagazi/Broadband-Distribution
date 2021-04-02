@@ -7,8 +7,13 @@ package broadband_distribution;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
@@ -46,8 +51,9 @@ public class customer_menu3 extends javax.swing.JInternalFrame {
 
                 String fAd = resultSet.getString("cAdress");
                 String fNo = resultSet.getString("cPhoneNo");
+                String p  = resultSet.getString("packageN");
 
-                String tData[] = {id, fname, femail, fAd, fNo};
+                String tData[] = {id, fname, femail, fAd,fNo, p};
                 DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
                 tbm1.addRow(tData);
 
@@ -79,22 +85,18 @@ public class customer_menu3 extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         id = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        area = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         email = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
-        pos = new javax.swing.JTextField();
+        dline = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        sal = new javax.swing.JTextField();
+        pack = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
 
         setBorder(null);
@@ -131,6 +133,11 @@ public class customer_menu3 extends javax.swing.JInternalFrame {
         jButton8.setBackground(new java.awt.Color(0, 203, 133));
         jButton8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton8.setText("DELETE");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         name.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         name.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -187,23 +194,17 @@ public class customer_menu3 extends javax.swing.JInternalFrame {
         jLabel11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel11.setText("Pakage");
 
-        area.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        area.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        area.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                areaFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                areaFocusLost(evt);
-            }
-        });
-
         jLabel9.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel9.setText("ENTER KEYWORDS :");
 
         jButton4.setBackground(new java.awt.Color(153, 153, 153));
         jButton4.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jButton4.setText("SREACH");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         email.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         email.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -216,29 +217,18 @@ public class customer_menu3 extends javax.swing.JInternalFrame {
             }
         });
 
-        jTextField1.setBorder(null);
-        jTextField1.setOpaque(false);
+        dline.setBorder(null);
+        dline.setOpaque(false);
 
-        pos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        pos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        pos.addFocusListener(new java.awt.event.FocusAdapter() {
+        pack.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        pack.setToolTipText("");
+        pack.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        pack.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                posFocusGained(evt);
+                packFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                posFocusLost(evt);
-            }
-        });
-
-        sal.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        sal.setToolTipText("");
-        sal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        sal.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                salFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                salFocusLost(evt);
+                packFocusLost(evt);
             }
         });
 
@@ -272,12 +262,6 @@ public class customer_menu3 extends javax.swing.JInternalFrame {
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("PHONE NO");
 
-        jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel6.setText("Complain");
-
-        jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel7.setText("Status");
-
         jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel10.setText("ADDRESS");
 
@@ -293,35 +277,27 @@ public class customer_menu3 extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7))
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(41, 41, 41)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(pos, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(26, 26, 26)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel2))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(name)
-                                            .addComponent(contactNo, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel10)
-                                            .addComponent(jLabel11))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(sal)
-                                            .addComponent(address)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(area, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(name)
+                                    .addComponent(contactNo, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel11))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(pack, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                                    .addComponent(address)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -334,7 +310,7 @@ public class customer_menu3 extends javax.swing.JInternalFrame {
                                         .addGap(36, 36, 36)
                                         .addComponent(jLabel9)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(dline, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(30, 30, 30)
                                         .addComponent(jButton4))))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -345,7 +321,7 @@ public class customer_menu3 extends javax.swing.JInternalFrame {
                         .addComponent(jButton8)
                         .addGap(58, 58, 58)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -360,7 +336,7 @@ public class customer_menu3 extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dline, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -380,15 +356,9 @@ public class customer_menu3 extends javax.swing.JInternalFrame {
                     .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(contactNo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sal, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pack, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
-                .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(area, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(pos, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addGap(40, 40, 40)
+                .addGap(109, 109, 109)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -422,11 +392,13 @@ public class customer_menu3 extends javax.swing.JInternalFrame {
         String temail = tbm1.getValueAt(csTable.getSelectedRow(), 2).toString();
         String tadd = tbm1.getValueAt(csTable.getSelectedRow(), 3).toString();
         String tcontact = tbm1.getValueAt(csTable.getSelectedRow(), 4).toString();
+         String p = tbm1.getValueAt(csTable.getSelectedRow(), 5).toString();
         id.setText(tid);
         name.setText(tName);
         email.setText(temail);
         address.setText(tadd);
         contactNo.setText(tcontact);
+        pack.setText(p);
     }//GEN-LAST:event_csTableMouseClicked
 
     private void nameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nameFocusGained
@@ -499,23 +471,6 @@ public class customer_menu3 extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_idFocusLost
 
-    private void areaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_areaFocusGained
-        // TODO add your handling code here:
-        if(area.getText().equals("WORKING AREA"))
-        {
-            area.setText("");
-        }
-    }//GEN-LAST:event_areaFocusGained
-
-    private void areaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_areaFocusLost
-        // TODO add your handling code here:
-
-        if(area.getText().equals(""))
-        {
-            area.setText("WORKING AREA");
-        }
-    }//GEN-LAST:event_areaFocusLost
-
     private void emailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFocusGained
         // TODO add your handling code here:
 
@@ -533,22 +488,6 @@ public class customer_menu3 extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_emailFocusLost
 
-    private void posFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_posFocusGained
-        // TODO add your handling code here:
-        if(pos.getText().equals("POSITION"))
-        {
-            pos.setText("");
-        }
-    }//GEN-LAST:event_posFocusGained
-
-    private void posFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_posFocusLost
-        // TODO add your handling code here:
-        if(pos.getText().equals(""))
-        {
-            pos.setText("POSITION");
-        }
-    }//GEN-LAST:event_posFocusLost
-
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -556,36 +495,290 @@ public class customer_menu3 extends javax.swing.JInternalFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
 
+         try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+
+            Statement statement = connection.createStatement();
+            String sql = "SELECT * FROM customer";
+            ResultSet resultSet = statement
+                    .executeQuery(sql);
+
+            while (resultSet.next()) {
+
+                String id = resultSet.getString("customerId");
+                String fname = resultSet.getString("cName");
+                String femail = resultSet.getString("cEmail");
+
+                String fAd = resultSet.getString("cAdress");
+                String fNo = resultSet.getString("cPhoneNo");
+                String p  = resultSet.getString("packageN");
+
+                String tData[] = {id, fname, femail, fAd,fNo, p};
+                DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
+                tbm1.addRow(tData);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void salFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_salFocusLost
+    private void packFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_packFocusLost
         // TODO add your handling code here:
-        if(sal.getText().equals(""))
+        if(pack.getText().equals(""))
         {
-            sal.setText("SALARY");
+            pack.setText("SALARY");
         }
-    }//GEN-LAST:event_salFocusLost
+    }//GEN-LAST:event_packFocusLost
 
-    private void salFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_salFocusGained
+    private void packFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_packFocusGained
         // TODO add your handling code here:
-        if(sal.getText().equals("SALARY"))
+        if(pack.getText().equals("SALARY"))
         {
-            sal.setText("");
+            pack.setText("");
         }
-    }//GEN-LAST:event_salFocusGained
+    }//GEN-LAST:event_packFocusGained
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         
         
+          String tname = "", temail = "", taddress = "", customerId = "",p="";
+        int tNo;
+        
+        String pNam="", pno="";
+        DefaultTableModel defaultTableModel = (DefaultTableModel) csTable.getModel();
+
+        if (csTable.getSelectedRowCount() == 1) {
+            //   System.out.println("at update");
+
+            tname = name.getText();
+            temail = email.getText();
+            taddress = address.getText();
+            tNo = Integer.parseInt(contactNo.getText());
+            p=pack.getText();
+            
+
+            int row = csTable.getSelectedRow();
+            customerId = defaultTableModel.getValueAt(row, 0).toString();
+            // CustomerProfile(customerId).setVisible(true);
+          //  CustomerProfile cp= new CustomerProfile(customerId.getText());
+
+            try {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection connection = DriverManager.getConnection(
+                        "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+                
+                          Statement statement = connection.createStatement();
+
+                
+
+                String sql = "UPDATE customer SET cName='" + tname + "', cEmail='" + temail + "',cAdress='" + taddress + "',cPhoneNo=" + tNo + ", packageN='" + p +"' where customerId = " + Integer.parseInt(customerId) + ";";
+
+                PreparedStatement prepare = connection.prepareStatement(sql);
+
+                prepare.executeUpdate();
+                
+                
+                 ResultSet resultSet1 = statement.executeQuery("Select pNo,price_Per_month from pakages where pName= ('" + p + "');" );
+                  if (resultSet1.next()) {
+                 pNam = resultSet1.getString("price_Per_month");
+                pno = resultSet1.getString("pNo");
+                
+     String sql2 = "UPDATE bill SET amount='" + Integer.parseInt(pNam) + "' where customerId = " + Integer.parseInt(customerId) + ";";
+    PreparedStatement prepare1 = connection.prepareStatement(sql2);
+
+                prepare1.executeUpdate();
+                  }
+               
+                DefaultTableModel tbm = (DefaultTableModel) csTable.getModel();
+                tbm.setRowCount(0);
+                JOptionPane.showMessageDialog(this, "Successfully Updated.");
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        
+        String tname = "", temail = "", taddress = "", customerId = "", p="";
+        int tNo;
+        DefaultTableModel defaultTableModel = (DefaultTableModel) csTable.getModel();
+
+        if (csTable.getSelectedRowCount() == 1) {
+
+            tname = name.getText();
+            temail = email.getText();
+            taddress = address.getText();
+            tNo = Integer.parseInt(contactNo.getText());
+            p=pack.getText();
+
+            int row = csTable.getSelectedRow();
+            customerId = defaultTableModel.getValueAt(row, 0).toString();
+
+            try {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection connection = DriverManager.getConnection(
+                        "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+
+            
+
+               Statement statement = connection.createStatement();
+
+             String sql = "DELETE FROM helpline WHERE customerId = " + Integer.parseInt(customerId) + ";";
+
+               PreparedStatement prepare = connection.prepareStatement(sql);
+
+               prepare.executeUpdate();
+                    
+                  String sql2 = "DELETE FROM bill WHERE customerId = " + Integer.parseInt(customerId) + ";";
+            PreparedStatement prepare2 = connection.prepareStatement(sql2);
+
+                    prepare2.executeUpdate();
+                    
+                    
+                    
+           
+                    String sql3 = "DELETE FROM customer WHERE customerId = " + Integer.parseInt(customerId) + ";";
+ 
+                  PreparedStatement prepare3 = connection.prepareStatement(sql3);
+
+                    prepare3.executeUpdate();   
+                    
+                    
+                    
+                     DefaultTableModel tbm = (DefaultTableModel) csTable.getModel();
+                tbm.setRowCount(0);
+
+                    JOptionPane.showMessageDialog(this, "Deleted Successfully");
+
+                
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            if (csTable.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table Empty");
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Please select a row for delete. ");
+            }
+
+        }
+
+        
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        
+         DefaultTableModel tbm = (DefaultTableModel) csTable.getModel();
+                tbm.setRowCount(0);
+        String value = jComboBox1.getSelectedItem().toString();
+        if (value.equals("NAME")) {
+            try {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection connection = DriverManager.getConnection(
+                        "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+
+                String dead = dline.getText();
+                // String size= jTextField2.getText();
+
+                Statement statement = connection.createStatement();
+
+                //String Client_Name = null;
+                //String Email = null;
+                //String sql="SELECT cName,cPhoneNo FROM customer WHERE customerId = '"+ Integer.parseInt(dead) +"'";
+                // String sql= "SELECT customer.cName, bill.amount,bill.deadline, bill.status,customer.cPhoneNo From bill INNER JOIN customer ON bill.customerId=customer.customerId  WHERE customerId = '"+ Integer.parseInt(dead) +"'";
+                //    ResultSet resultSet = statement.executeQuery
+                ResultSet resultSet = statement.executeQuery("SELECT  * From customer  where customer.cName like '%" + dead + "%' ");
+                if (resultSet.next()) {
+
+                     String id = resultSet.getString("customerId");
+                String fname = resultSet.getString("cName");
+                String femail = resultSet.getString("cEmail");
+
+                String fAd = resultSet.getString("cAdress");
+                String fNo = resultSet.getString("cPhoneNo");
+                String p  = resultSet.getString("packageN");
+
+                    String tData[] = {id,fname,femail,fAd,fNo,p};
+                    DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
+                    tbm1.addRow(tData);
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Enter Keyword");
+
+                }
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (value.equals("ID")) {
+            try {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection connection = DriverManager.getConnection(
+                        "jdbc:sqlserver://localhost:1433;databaseName=Broadband;selectMethod=cursor", "sa", "123456");
+
+                String dead = dline.getText();
+                // String size= jTextField2.getText();
+
+                Statement statement = connection.createStatement();
+
+                //String Client_Name = null;
+                //String Email = null;
+                //String sql="SELECT cName,cPhoneNo FROM customer WHERE customerId = '"+ Integer.parseInt(dead) +"'";
+                // String sql= "SELECT customer.cName, bill.amount,bill.deadline, bill.status,customer.cPhoneNo From bill INNER JOIN customer ON bill.customerId=customer.customerId  WHERE customerId = '"+ Integer.parseInt(dead) +"'";
+                //    ResultSet resultSet = statement.executeQuery
+                ResultSet resultSet = statement.executeQuery(" SELECT  * From customer  where customer.customerId like '" + Integer.parseInt(dead) + "'");
+                if (resultSet.next()) {
+
+                       String id = resultSet.getString("customerId");
+                String fname = resultSet.getString("cName");
+                String femail = resultSet.getString("cEmail");
+
+                String fAd = resultSet.getString("cAdress");
+                String fNo = resultSet.getString("cPhoneNo");
+                String p  = resultSet.getString("packageN");
+
+                    String tData[] = {id,fname,femail,fAd,fNo,p};
+
+                    
+                    DefaultTableModel tbm1 = (DefaultTableModel) csTable.getModel();
+                    tbm1.addRow(tData);
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Enter Keyword");
+
+                }
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    }            
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField address;
-    private javax.swing.JTextField area;
     private javax.swing.JTextField contactNo;
     private javax.swing.JTable csTable;
+    private javax.swing.JTextField dline;
     private javax.swing.JTextField email;
     private javax.swing.JTextField id;
     private javax.swing.JButton jButton3;
@@ -599,16 +792,12 @@ public class customer_menu3 extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField name;
-    private javax.swing.JTextField pos;
-    private javax.swing.JTextField sal;
+    private javax.swing.JTextField pack;
     // End of variables declaration//GEN-END:variables
 }
